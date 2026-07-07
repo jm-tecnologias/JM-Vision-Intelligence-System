@@ -1,0 +1,42 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jun 26, 2026, 8:30:21 AM
+    Author     : JM-Tecnologias
+*/
+
+.tree-view {
+    -fx-background-color: transparent;
+    -fx-control-inner-background:  transparent;
+    /*-fx-text-fill: white;*/
+}
+
+.glass-effect {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-border-color: rgba(255, 255, 255, 0.30);
+    /* sombra */
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0.2, 0, 4);
+}
+
+.tree-cell {
+    -fx-font-size: 18px;
+    /*-fx-font-weight: bold;*/
+    -fx-font-family: 'Berlin Sans FB';
+}
+
+/*.tree-cell:hover {
+    -fx-background-color: #3a3a3a;
+}*/
+
+.tree-cell:selected {
+    -fx-background-color:  #0f75bb;
+    -fx-text-fill: white;
+}
+/*
+
+
+.tree-cell .arrow {
+    -fx-background-color: white;
+}*/

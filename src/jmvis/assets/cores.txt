@@ -1,0 +1,3 @@
+#0f75bb Azul
+#41c0b5 verde
+#000000b3; cinza escuro

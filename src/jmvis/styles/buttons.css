@@ -1,0 +1,20 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 3, 2026, 11:22:50 AM
+    Author     : JM-Tecnologias
+*/
+
+.close:hover{
+    /*-fx-background-color: #000000b3;*/
+    -fx-background-radius: 10px;
+}
+
+.text-color{
+    -fx-text-fill: #fff;
+}
+.text-area-color{
+    -fx-text-fill: black;
+}

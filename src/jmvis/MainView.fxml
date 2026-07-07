@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="anchorFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="980.0" prefWidth="1363.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jmvis.PleaseProvideControllerClassName">
+    <children>
+      <AnchorPane fx:id="anchorTitleBar" minHeight="-Infinity" prefHeight="45.0" prefWidth="1305.0" style="-fx-background-color: #3e3e3e;" stylesheets="@styles/tabepane.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label layoutX="66.0" prefHeight="45.0" prefWidth="1297.0" text="JM Vision Intelligence System" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Berlin Sans FB" size="24.0" />
+               </font>
+            </Label>
+            <HBox layoutX="1228.0" AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
+               <children>
+                  <Button disable="true" layoutX="10.0" layoutY="10.0" minWidth="39.0" mnemonicParsing="false" onAction="#hide_show_Pallet" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="41.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/pallet.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Empty Tooltip" />
+                     </tooltip>
+                  </Button>
+                  <Button ellipsisString="" layoutX="10.0" layoutY="10.0" minWidth="39.0" mnemonicParsing="false" onAction="#show_and_hide_scrollPane" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="41.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/scroll.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Press Ctrl+S to show or hide ScrollPane">
+                           <font>
+                              <Font name="Times New Roman" size="14.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
+                  </Button>
+                  <Button fx:id="btnPropsCollapse" minWidth="39.0" mnemonicParsing="false" onAction="#show_and_hide_props" prefHeight="39.0" prefWidth="39.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="41.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/props.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <tooltip>
+                        <Tooltip text="Press Ctrl+P to show or hide Properties pallet">
+                           <font>
+                              <Font name="Times New Roman" size="14.0" />
+                           </font>
+                        </Tooltip>
+                     </tooltip>
+                  </Button>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#minimize" prefHeight="45.0" prefWidth="45.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/minimize.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#maximize" prefHeight="45.0" prefWidth="45.0" style="-fx-cursor: hand; -fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets right="2.0" />
+                     </HBox.margin>
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/maximize.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#close" prefHeight="45.0" prefWidth="45.0" style="-fx-cursor: hand; -fx-background-color: transparent;">
+                     <graphic>
+                        <ImageView fitHeight="84.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/close.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="110.0" fitWidth="100.0" layoutX="-15.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/LOGO.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="anchorImagePreview" layoutY="45.0" prefHeight="630.0" prefWidth="1163.0" style="-fx-background-color: transparent; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
+      <AnchorPane fx:id="anchorPallet" layoutY="45.0" prefHeight="707.0" prefWidth="320.0" styleClass="glass-effect" stylesheets="@styles/tabepane.css" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <AnchorPane prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #0f75bb;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TreeView fx:id="treePalette" prefHeight="200.0" prefWidth="320.0" stylesheets="@styles/treeViewStyles.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="188.0" spacing="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Button fx:id="btnMakeDir" mnemonicParsing="false" onAction="#makeDir" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/add_folder.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#renameDir" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/edit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#deleteDir" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/trash.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="215.0" layoutY="10.0" mnemonicParsing="false" onAction="#startCopy" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/import.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="60.0" layoutY="10.0" mnemonicParsing="false" onAction="#refreshTree" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
+                     <graphic>
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@assets/icons/refresh.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets right="10.0" />
+               </padding>
+            </HBox>
+         </children></AnchorPane>
+      <HBox fx:id="hBoxButtonsControlls" alignment="CENTER" layoutY="678.0" prefHeight="65.0" prefWidth="1363.0" AnchorPane.bottomAnchor="235.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="65.0" prefWidth="381.0" style="-fx-background-color: #000000b3; -fx-border-color: rgba(255,255,255,0.35); -fx-border-radius: 20; -fx-background-radius: 20;">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="65.0" prefWidth="134.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#prev" prefHeight="50.0" prefWidth="54.0" style="-fx-background-color: transparent;" textAlignment="CENTER">
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="40.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/next.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Press directional arrows to change images">
+                                 <font>
+                                    <Font name="Times New Roman" size="14.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </Button>
+                        <Slider fx:id="sliderRotate" max="180.0" min="-180.0" onDragDetected="#spiner" prefHeight="24.0" prefWidth="296.0">
+                           <tooltip>
+                              <Tooltip text="Press Ctrl+Shift+ arrow Left or Right to rotate the  image" />
+                           </tooltip></Slider>
+                        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#next" prefHeight="50.0" style="-fx-background-color: transparent;" textFill="#252525">
+                           <graphic>
+                              <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/next.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Press directional arrows to change images">
+                                 <font>
+                                    <Font name="Times New Roman" size="14.0" />
+                                 </font>
+                              </Tooltip>
+                           </tooltip>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </AnchorPane>
+            <AnchorPane layoutX="697.0" layoutY="10.0" prefHeight="65.0" prefWidth="150.0" style="-fx-background-color: #000000b3; -fx-border-color: rgba(255,255,255,0.35); -fx-border-radius: 20; -fx-background-radius: 20;">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="65.0" prefWidth="134.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#getMapView" prefHeight="50.0" prefWidth="65.0" style="-fx-cursor: hand; -fx-background-color: transparent;" textFill="#41c0b5">
+                           <font>
+                              <Font name="System Bold" size="34.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@assets/icons/link.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+               <HBox.margin>
+                  <Insets left="5.0" />
+               </HBox.margin>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox fx:id="tabPaneProps" layoutX="1030.0" layoutY="50.0" style="-fx-background-color: #000000b3;" styleClass="glass-effect" stylesheets="@styles/tabepane.css" translateX="335.0" AnchorPane.bottomAnchor="225.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <TabPane prefHeight="692.0" prefWidth="333.0" styleClass="tab-header-background" stylesheets="@styles/tabepane.css" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Details">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <VBox prefHeight="121.0" prefWidth="342.0" AnchorPane.bottomAnchor="537.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <children>
+                                    <HBox prefHeight="18.0" prefWidth="370.0">
+                                       <children>
+                                          <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/icons/lentes-da-camera.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Device Details" textFill="#41c0b5">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="13.0" prefWidth="370.0">
+                                       <children>
+                                          <Label prefHeight="25.0" prefWidth="130.0" text="Camera:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labMaker" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="11.0" prefWidth="370.0">
+                                       <children>
+                                          <Label prefHeight="25.0" prefWidth="130.0" text="Model:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labModel" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="8.0" prefWidth="370.0">
+                                       <children>
+                                          <Label prefHeight="25.0" prefWidth="130.0" text="Software:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labSoftware" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="10.0" layoutY="160.0" prefHeight="130.0" prefWidth="313.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+                                 <children>
+                                    <HBox prefHeight="48.0" prefWidth="370.0">
+                                       <children>
+                                          <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/icons/placeholder.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" text="GPS Details" textFill="#41c0b5">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="8.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" text="Latitude:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labLatitude" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="10.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" text="Longitude:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labLongitude" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="17.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" text="Altitude:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labAltitude" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="100.0" prefHeight="17.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" text="Country:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labCountry" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="119.0" prefHeight="17.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" text="Code:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labCountryCode" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="127.0" prefHeight="17.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" text="City:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labCity" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="148.0" prefHeight="17.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="100.0" text="Region:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox layoutX="10.0" layoutY="169.0" prefHeight="17.0" prefWidth="370.0">
+                                       <children>
+                                          <Label fx:id="labRegion" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox layoutX="28.0" layoutY="298.0" prefHeight="174.0" prefWidth="363.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="355.0">
+                                 <children>
+                                    <HBox prefHeight="39.0" prefWidth="370.0">
+                                       <children>
+                                          <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/icons/project-management.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Image Specifications" textFill="#41c0b5">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="20.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Exposure Time:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labExposureTime" prefHeight="31.0" prefWidth="250.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="21.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Shutter Speed Value:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labShutterSpeedValue" prefHeight="31.0" prefWidth="250.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="23.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="ISO Speed Ratings:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labISOSpeedRating" prefHeight="31.0" prefWidth="250.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="23.0" prefWidth="370.0">
+                                       <children>
+                                          <Label fx:id="lebFocalLength" minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Focal Length:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labFocalLength" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="24.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Focal Length In 35 mm Film:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labFocalLengthIn35mmFilm" prefHeight="25.0" prefWidth="115.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <VBox prefHeight="122.0" prefWidth="370.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="525.0">
+                                 <children>
+                                    <HBox prefHeight="43.0" prefWidth="370.0">
+                                       <children>
+                                          <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@assets/icons/data-limite.png" />
+                                             </image>
+                                          </ImageView>
+                                          <Label alignment="CENTER" contentDisplay="CENTER" text="Date Datails" textFill="#41c0b5">
+                                             <HBox.margin>
+                                                <Insets left="10.0" top="10.0" />
+                                             </HBox.margin>
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="21.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" text="Created At:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labDateTimeOriginal" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="25.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" text="Digitalized At:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labDateTimeDigitized" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                    <HBox prefHeight="25.0" prefWidth="370.0">
+                                       <children>
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="130.0" text="Offset Time:" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                          <Label fx:id="labOffsetTime" prefHeight="31.0" prefWidth="288.0" text="N/A" textFill="WHITE">
+                                             <font>
+                                                <Font name="Berlin Sans FB" size="18.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                              <Separator layoutX="56.0" layoutY="130.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0" />
+                              <Separator layoutY="285.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="345.0" />
+                              <Separator layoutY="485.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="515.0" />
+                           </children>
+                           <padding>
+                              <Insets left="20.0" top="5.0" />
+                           </padding>
+                        </AnchorPane>
+                     </content>
+                </Tab>
+                <Tab text="Set Report">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextArea fx:id="txtAreaNotes" prefHeight="269.0" prefWidth="313.0" promptText="Image Notes" styleClass="text-area-color" stylesheets="@styles/buttons.css" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                                 <font>
+                                    <Font name="Times New Roman" size="22.0" />
+                                 </font>
+                              </TextArea>
+                              <HBox alignment="CENTER" spacing="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="330.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" onAction="#saveImageDetail" prefHeight="40.0" prefWidth="150.0" text="Export" />
+                                    <Button mnemonicParsing="false" onAction="#abrirDocumento" prefHeight="40.0" prefWidth="150.0" text="Open" />
+                                 </children>
+                              </HBox>
+                              <Label fx:id="labStatusNote" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                 <font>
+                                    <Font name="Berlin Sans FB" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                           <padding>
+                              <Insets top="5.0" />
+                           </padding>
+                        </AnchorPane>
+                     </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </HBox>
+      <ScrollPane fx:id="scrollPane" prefHeight="170.0" prefWidth="1363.0" style="-fx-background-color: #000000b3;" stylesheets="@styles/scrollpane.css" vbarPolicy="NEVER" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="10.0">
+         <content>
+            <AnchorPane prefHeight="140.0" prefWidth="1007.0" style="-fx-background-color: transparent;">
+               <children>
+                  <HBox fx:id="imageScroll" prefHeight="140.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+      <AnchorPane prefHeight="45.0" prefWidth="200.0" style="-fx-background-color: #0f75bb;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutX="848.0" layoutY="14.0" text="© 2026 JM Tecnologias — Todos os direitos reservados." textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Times New Roman" size="12.0" />
+               </font></Label>
+            <Label fx:id="lblStatus" contentDisplay="CENTER" layoutX="188.0" layoutY="17.0" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="275.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Times New Roman" size="16.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
