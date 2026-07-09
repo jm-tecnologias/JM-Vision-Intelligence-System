@@ -39,7 +39,7 @@ public class ImageDetailsBinder {
             Label labLatitude,
             Label labLongitude,
             Label labAltitude,
-            Label labCountry,
+            Label labCountry, 
             Label labCountryCode,
             Label labCity,
             Label labRegion,
