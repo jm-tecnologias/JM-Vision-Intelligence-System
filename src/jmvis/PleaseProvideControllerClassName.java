@@ -77,6 +77,7 @@ public class PleaseProvideControllerClassName implements Initializable {
     private ImageReportService imageReportService;
     private MapService mapService;
     private ThumbnailService thumbnailService;
+    private CopyService copyService;
     private ImageModel imgModel;
     private TitleBarService titlebarService;
     private FileManager fm;
@@ -171,29 +172,7 @@ public class PleaseProvideControllerClassName implements Initializable {
     private Label labCity;
     @FXML
     private Label labRegion;
-    @FXML
-    private Label labLatitudePrev;
-    @FXML
-    private Label labLongitudePrev;
-    @FXML
-    private Label labAltitudePrev;
-
-    @FXML
-    private Label labNamePrev;
-    @FXML
-    private Label labDatePrev;
-
-//    @FXML
-//    private CheckBox dateChk;
-//
-//    @FXML
-//    private CheckBox deviceChk;
-//
-//    @FXML
-//    private CheckBox gpsChk;
-//
-//    @FXML
-//    private CheckBox imageChk;
+    
     @FXML
     private TextArea txtAreaNotes;
 
@@ -490,6 +469,7 @@ public class PleaseProvideControllerClassName implements Initializable {
         imageReportService = new ImageReportService(imageMetadataService);
         mapService = new MapService();
         thumbnailService = new ThumbnailService();
+        copyService = new CopyService();
         imageDetailsBinder = new ImageDetailsBinder(
                 labMaker,
                 labModel,
@@ -677,41 +657,58 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     @FXML
     void startCopy(ActionEvent event) {
-
-        DirectoryChooser chooser = new DirectoryChooser();
-        chooser.setTitle("Selecionar pasta de origem");
-
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        File origemFile = chooser.showDialog(stage);
-
-        if (origemFile == null) {
-            lblStatus.setText("Operacao cancelada.");
+        Path source = chooseSourceFolder(event);
+        if (source == null) {
             return;
         }
 
-        File destinoFile = new File("C:/JMVIS");
-
-        if (destinoFile == null) {
-            lblStatus.setText("Operacao cancelada.");
-            return;
-        }
-
-        Path origem = origemFile.toPath();
         if (file == null) {
             lblStatus.setText("Destination not set.");
             return;
         }
-        Path destino = file.toPath();
 
-        CopyService service = new CopyService();
-        Task<Void> task = service.copyImages(origem, destino);
-
+        Path destination = file.toPath();
+        Task<Integer> task = copyService.importImages(source, destination);
         lblStatus.textProperty().bind(task.messageProperty());
 
-        new Thread(task).start();
-//        loadImagesAsync(destino);
-        Main.setData(" Images Imported");
+        task.setOnSucceeded(workerStateEvent -> {
+            lblStatus.textProperty().unbind();
+            lblStatus.setText(task.getValue() + " images imported.");
+            refreshImportedImages(destination);
+            showMessage(event, task.getValue() + " Images Imported");
+        });
+
+        task.setOnFailed(workerStateEvent -> {
+            lblStatus.textProperty().unbind();
+            lblStatus.setText("Import failed.");
+            showMessage(event, "Error: " + task.getException());
+        });
+
+        copyService.start(task);
+    }
+
+    private Path chooseSourceFolder(ActionEvent event) {
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Selecionar pasta de origem");
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        File sourceFolder = chooser.showDialog(stage);
+
+        if (sourceFolder == null) {
+            lblStatus.setText("Operacao cancelada.");
+            return null;
+        }
+
+        return sourceFolder.toPath();
+    }
+
+    private void refreshImportedImages(Path destination) {
+        imageScroll.getChildren().clear();
+        loadImagesAsync(destination);
+    }
+
+    private void showMessage(ActionEvent event, String message) {
+        Main.setData(message);
         LoadAndMoveUtilities.showAsPopUP(event, null);
         LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
     }
