@@ -42,6 +42,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import jmvis.util.CopyService;
 import jmvis.util.FileManager;
+import jmvis.util.ImageDetailsBinder;
 import jmvis.util.ImageModel;
 import jmvis.util.ImageMetadataService;
 import jmvis.util.ImageReportService;
@@ -71,6 +72,7 @@ public class PleaseProvideControllerClassName implements Initializable {
     private Label lblStatus;
 
     private ImageService imageService;
+    private ImageDetailsBinder imageDetailsBinder;
     private ImageMetadataService imageMetadataService;
     private ImageReportService imageReportService;
     private MapService mapService;
@@ -488,6 +490,26 @@ public class PleaseProvideControllerClassName implements Initializable {
         imageReportService = new ImageReportService(imageMetadataService);
         mapService = new MapService();
         thumbnailService = new ThumbnailService();
+        imageDetailsBinder = new ImageDetailsBinder(
+                labMaker,
+                labModel,
+                labSoftware,
+                labLatitude,
+                labLongitude,
+                labAltitude,
+                labCountry,
+                labCountryCode,
+                labCity,
+                labRegion,
+                labExposureTime,
+                labShutterSpeedValue,
+                labISOSpeedRating,
+                labFocalLength,
+                labFocalLengthIn35mmFilm,
+                labDateTimeOriginal,
+                labDateTimeDigitized,
+                labOffsetTime
+        );
         imgModel = new ImageModel();
         //        Inicializa logo 
         imageService.setImagePreview(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString());
@@ -590,28 +612,7 @@ public class PleaseProvideControllerClassName implements Initializable {
 
             imgModel = imageMetadataService.analyze(path.toString());
             Main.setData(imgModel);
-
-            labMaker.setText(imgModel.getDeviceInfo().getMake() == null ? "N/A" : imgModel.getDeviceInfo().getMake());
-            labModel.setText(imgModel.getDeviceInfo().getModel() == null ? "N/A" : imgModel.getDeviceInfo().getModel());
-            labSoftware.setText(imgModel.getDeviceInfo().getSoftware() == null ? "N/A" : imgModel.getDeviceInfo().getSoftware());
-
-            labLatitude.setText(imgModel.getGpsInfo().getLatitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getLatitude()));
-            labLongitude.setText(imgModel.getGpsInfo().getLongitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getLongitude()));
-            labAltitude.setText(imgModel.getGpsInfo().getAltitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getAltitude()));
-            labCountry.setText(imgModel.getGpsInfo().getCountry() == null ? "N/A" : imgModel.getGpsInfo().getCountry());
-            labCountryCode.setText(imgModel.getGpsInfo().getCountryCode() == null ? "N/A" : imgModel.getGpsInfo().getCountryCode());
-            labCity.setText(imgModel.getGpsInfo().getCity() == null ? "N/A" : imgModel.getGpsInfo().getCity());
-            labRegion.setText(imgModel.getGpsInfo().getDistrict() == null ? "N/A" : imgModel.getGpsInfo().getDistrict());
-
-            labExposureTime.setText(imgModel.getImageSpecification().getExposureTime() == null ? "N/A" : String.format("%.4f", imgModel.getImageSpecification().getExposureTime()));
-            labShutterSpeedValue.setText(imgModel.getImageSpecification().getShutterSpeedValue()== null ? "N/A" : String.format("%.4f", imgModel.getImageSpecification().getShutterSpeedValue()));
-            labISOSpeedRating.setText(imgModel.getImageSpecification().getIsoSpeedRatings()== null ? "N/A" : String.format("%.2f", imgModel.getImageSpecification().getIsoSpeedRatings()));
-            labFocalLength.setText(imgModel.getImageSpecification().getFocalLength()== null ? "N/A" : String.format("%.2f", imgModel.getImageSpecification().getFocalLength()));
-            labFocalLengthIn35mmFilm.setText(imgModel.getImageSpecification().getFocalLengthIn35mmFilm()== null ? "N/A" : String.format("%.4f", imgModel.getImageSpecification().getFocalLengthIn35mmFilm()));
-
-            labDateTimeOriginal.setText(imgModel.getImageDate().getDateTimeOriginal() == null ? "N/A" : imgModel.getImageDate().getDateTimeOriginal());
-            labDateTimeDigitized.setText(imgModel.getImageDate().getDateTimeDigitized() == null ? "N/A" : imgModel.getImageDate().getDateTimeDigitized());
-            labOffsetTime.setText(imgModel.getImageDate().getOffsetTime() == null ? "N/A" : imgModel.getImageDate().getOffsetTime());
+            imageDetailsBinder.show(imgModel);
         } catch (Exception ex) {
             Main.setData("Error: " + ex);
             LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
