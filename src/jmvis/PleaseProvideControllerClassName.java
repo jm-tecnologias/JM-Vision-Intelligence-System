@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -21,19 +20,15 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import static jmvis.util.ImageUtils.listImages;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -52,6 +47,8 @@ import jmvis.util.ImageMetadataService;
 import jmvis.util.ImageReportService;
 import jmvis.util.LoadAndMoveUtilities;
 import jmvis.util.MapService;
+import jmvis.util.ThumbnailService;
+import jmvis.util.ThumbnailService.ThumbnailItem;
 
 /**
  * FXML Controller class
@@ -63,9 +60,6 @@ import jmvis.util.MapService;
  * @since 2026
  */
 public class PleaseProvideControllerClassName implements Initializable {
-
-    private final List<ImageThumb> loadedThumbs = new ArrayList<>();
-    private final List<ImageThumb> selectedImages = new ArrayList<>();
 
     // Path Cliced at Pallet
     private File file;
@@ -80,6 +74,7 @@ public class PleaseProvideControllerClassName implements Initializable {
     private ImageMetadataService imageMetadataService;
     private ImageReportService imageReportService;
     private MapService mapService;
+    private ThumbnailService thumbnailService;
     private ImageModel imgModel;
     private TitleBarService titlebarService;
     private FileManager fm;
@@ -200,12 +195,7 @@ public class PleaseProvideControllerClassName implements Initializable {
     @FXML
     private TextArea txtAreaNotes;
 
-    private List<Path> carouselHelper;
     private Path auxPath;
-    private int countCarouselHelper;
-    private int countNext;
-    private int countPrev;
-    private int key;
 
     @FXML
     public void close(ActionEvent evt) {
@@ -316,7 +306,7 @@ public class PleaseProvideControllerClassName implements Initializable {
 
         chooser.setTitle("Opening Reports");
 
-        // Pasta padrão
+        // Pasta padrao
         File defaultDir = Paths.get(
                 System.getProperty("user.home"),
                 "Documents",
@@ -488,7 +478,7 @@ public class PleaseProvideControllerClassName implements Initializable {
             if (change.getControlNewText().length() <= 300) {
                 return change;
             }
-            lblStatus.setText("Atingiu o limite máximo de caracteres");
+            lblStatus.setText("Atingiu o limite maximo de caracteres");
             return null;
         });
         txtAreaNotes.setTextFormatter(formatter);
@@ -497,6 +487,7 @@ public class PleaseProvideControllerClassName implements Initializable {
         imageMetadataService = new ImageMetadataService();
         imageReportService = new ImageReportService(imageMetadataService);
         mapService = new MapService();
+        thumbnailService = new ThumbnailService();
         imgModel = new ImageModel();
         //        Inicializa logo 
         imageService.setImagePreview(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString());
@@ -522,7 +513,7 @@ public class PleaseProvideControllerClassName implements Initializable {
         });
 
     }
-    // 🔥 MÉTODO RECURSIVO PARA MONTAR A ÁRVORE
+    // ðŸ”¥ MÃ‰TODO RECURSIVO PARA MONTAR A ÃRVORE
 
     private TreeItem<File> createNode(File file) {
 
@@ -586,62 +577,12 @@ public class PleaseProvideControllerClassName implements Initializable {
     }
 
     private void loadImagesAsync(Path folder) {
-        countCarouselHelper = 0;
-        countNext = 0;
-        countPrev = 0;
-        key = 0;
+        auxPath = null;
+        thumbnailService.loadThumbnails(folder, thumb -> {
+            thumb.getView().setOnMouseClicked((MouseEvent e) -> selectThumbnail(thumb, e));
+            imageScroll.getChildren().add(thumb.getView());
+        });
 
-        carouselHelper = new ArrayList<>();
-        loadedThumbs.clear();
-
-        Task<Void> task = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-
-                List<Path> images = listImages(folder.toString());
-                countCarouselHelper = images.size();
-                for (Path img : images) {
-                    carouselHelper.add(img);
-
-                    Image image = new Image(img.toUri().toString(), 100, 100, true, true, true);
-//
-                    ImageView iv = new ImageView(image);
-                    iv.setFitWidth(150);
-                    iv.setFitHeight(150);
-                    iv.setPreserveRatio(true);
-//
-//                    // opcional: estilo tipo card
-                    HBox.setMargin(iv, new Insets(10, 15, 0, 15));
-
-                    // estilo base (não selecionado)
-                    iv.setStyle(""
-                            + "-fx-cursor: hand;"
-                            + "-fx-border-color: transparent;"
-                            + "-fx-border-width: 5px;");
-
-                    ImageThumb thumb = new ImageThumb(img, iv);
-                    loadedThumbs.add(thumb);
-                    iv.setOnMouseClicked((MouseEvent e) -> {
-                        handleSelection(thumb, e);
-                        auxPath = img;
-                        imageService.setImagePreview(img.toString());
-                        sliderRotate.setValue(0);
-                        showProps(img);
-                    });
-
-                    Platform.runLater(() -> imageScroll.getChildren().add(iv));
-
-                }
-
-                return null;
-            }
-        };
-
-        Thread t = new Thread(task);
-        t.setDaemon(true);
-        t.start();
-
-//                imageService.setImagePreview(carouselHelper.get(countNext).toString());
     }
 
     private void showProps(Path path) {
@@ -684,13 +625,9 @@ public class PleaseProvideControllerClassName implements Initializable {
     }
 
     void nextImage() {
-        if (countNext < (countCarouselHelper - 1)) {
-            countNext = carouselHelper.indexOf(auxPath) + 1;
-            imageService.setImagePreview(carouselHelper.get(countNext).toString());
-            sliderRotate.setValue(0);
-            countPrev = countNext;
-            showProps(carouselHelper.get(countNext));
-            auxPath = carouselHelper.get(countNext);
+        Path nextPath = thumbnailService.nextAfter(auxPath);
+        if (nextPath != null) {
+            previewImage(nextPath);
         }
     }
 
@@ -700,14 +637,9 @@ public class PleaseProvideControllerClassName implements Initializable {
     }
 
     void previuslyImage() {
-        if (countPrev == countNext && countPrev != 0) {
-            countPrev = carouselHelper.indexOf(auxPath) - 1;
-            imageService.setImagePreview(carouselHelper.get(countPrev).toString());
-            sliderRotate.setValue(0);
-            countNext = countPrev;
-            showProps(carouselHelper.get(countPrev));
-            auxPath = carouselHelper.get(countPrev);
-
+        Path previousPath = thumbnailService.previousBefore(auxPath);
+        if (previousPath != null) {
+            previewImage(previousPath);
         }
     }
 
@@ -723,58 +655,23 @@ public class PleaseProvideControllerClassName implements Initializable {
         LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
     }
 
-    private static class ImageThumb {
+    private void selectThumbnail(ThumbnailItem thumb, MouseEvent e) {
 
-        Path path;
-        ImageView view;
-        boolean selected;
+        thumbnailService.handleSelection(thumb, e.isControlDown());
+        previewImage(thumb.getPath());
 
-        ImageThumb(Path path, ImageView view) {
-            this.path = path;
-            this.view = view;
-            this.selected = false;
-        }
     }
 
-    private void handleSelection(ImageThumb thumb, MouseEvent e) {
 
-        boolean ctrl = e.isControlDown();
-
-        if (!ctrl) {
-            // limpa seleção anterior
-            selectedImages.forEach(t -> setSelectedStyle(t, false));
-            selectedImages.clear();
-        }
-
-        if (thumb.selected) {
-            thumb.selected = false;
-            selectedImages.remove(thumb);
-            setSelectedStyle(thumb, false);
-        } else {
-            thumb.selected = true;
-            selectedImages.add(thumb);
-            setSelectedStyle(thumb, true);
-        }
-    }
-
-    private void setSelectedStyle(ImageThumb thumb, boolean selected) {
-
-        if (selected) {
-            thumb.view.setStyle(
-                    " -fx-cursor: hand;"
-                    + "-fx-border-color: #41c0b5;"
-                    + "-fx-border-width: 3;"
-                    + "-fx-effect: dropshadow(gaussian, rgba(0,170,255,0.6), 10, 0.3, 0, 0);"
-            );
-        } else {
-            thumb.view.setStyle("-fx-cursor: hand; -fx-border-color: transparent;");
-        }
+    private void previewImage(Path imagePath) {
+        auxPath = imagePath;
+        imageService.setImagePreview(imagePath.toString());
+        sliderRotate.setValue(0);
+        showProps(imagePath);
     }
 
     public List<Path> getSelectedImagePaths() {
-        return selectedImages.stream()
-                .map(t -> t.path)
-                .collect(java.util.stream.Collectors.toList());
+        return thumbnailService.getSelectedImagePaths();
     }
 
     @FXML
@@ -788,14 +685,14 @@ public class PleaseProvideControllerClassName implements Initializable {
         File origemFile = chooser.showDialog(stage);
 
         if (origemFile == null) {
-            lblStatus.setText("Operação cancelada.");
+            lblStatus.setText("Operacao cancelada.");
             return;
         }
 
         File destinoFile = new File("C:/JMVIS");
 
         if (destinoFile == null) {
-            lblStatus.setText("Operação cancelada.");
+            lblStatus.setText("Operacao cancelada.");
             return;
         }
 
