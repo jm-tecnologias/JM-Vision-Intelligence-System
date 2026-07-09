@@ -50,13 +50,18 @@ import javafx.stage.Modality;
 import jmvis.util.CopyService;
 import jmvis.util.FileManager;
 import jmvis.util.ImageModel;
+import jmvis.util.ImageMetadataService;
 import jmvis.util.LoadAndMoveUtilities;
 import jmvis.util.PDFReport;
 
 /**
  * FXML Controller class
+ * 
+ * <p> Classe controladora da MainView.fxml. esta classe controla todos componentes visuais da view</p>
  *
  * @author JM-Tecnologias
+ * @version 1.0
+ * @since 2026
  */
 public class PleaseProvideControllerClassName implements Initializable {
 
@@ -73,6 +78,7 @@ public class PleaseProvideControllerClassName implements Initializable {
     private Label lblStatus;
 
     private ImageService imageService;
+    private ImageMetadataService imageMetadataService;
     private ImageModel imgModel;
     private TitleBarService titlebarService;
     private FileManager fm;
@@ -345,12 +351,6 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     @FXML
     public void getMapView(ActionEvent e) {
-//        LoadAndMoveUtilities.showAsPopUP(e, null);
-//        LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/MapView.fxml");
-
-//        try {
-//        Double lat = imgModel.getGpsInfo().getLatitude();
-//        Double lng = imgModel.getGpsInfo().getLongitude();
         if (imgModel.getGpsInfo() != null) {
             if (imgModel.getGpsInfo().getLatitude() != null || imgModel.getGpsInfo().getLongitude() != null) {
                 try {
@@ -392,23 +392,6 @@ public class PleaseProvideControllerClassName implements Initializable {
         }
         trans.play();
     }
-
-//    @FXML
-//    void show_and_hide_scrollPane(ActionEvent event) {
-//        TranslateTransition trans = new TranslateTransition(Duration.millis(400), scrollPane);
-//        if (scrollPane.getTranslateY() == 0) {
-//            trans.setToY(200);
-////            AnchorPane.setBottomAnchor(anchorImagePreview, 50.0);
-//            AnchorPane.setBottomAnchor(hBoxButtonsControlls, 60.0);
-//
-//        } else {
-//            trans.setToY(0);
-////            AnchorPane.setBottomAnchor(anchorImagePreview, 220.0);
-//            AnchorPane.setBottomAnchor(hBoxButtonsControlls, 235.0);
-//
-//        }
-//        trans.play();
-//    }
     @FXML
     void show_and_hide_scrollPane(ActionEvent event) {
         showhideScrollPane();
@@ -450,54 +433,13 @@ public class PleaseProvideControllerClassName implements Initializable {
 
         if (tabPaneProps.getTranslateX() == 335) {
             transition.setToX(0);
-//            AnchorPane.setRightAnchor(scrollPane, 345.0);
-//            AnchorPane.setRightAnchor(anchorImagePreview, 345.0);
-
         } else {
             transition.setToX(335);
-//            AnchorPane.setRightAnchor(scrollPane, 50.0);
-//            AnchorPane.setRightAnchor(anchorImagePreview, 50.0);
         }
         transition.play();
         trans.play();
     }
 
-//    @FXML
-//    void show_and_hide_props(ActionEvent event) {
-//
-//        boolean aberto = tabPaneProps.getTranslateX() == 0;
-//
-//        // Painel lateral
-//        TranslateTransition panelTransition
-//                = new TranslateTransition(Duration.millis(400), tabPaneProps);
-//
-//        // ScrollPane
-//        TranslateTransition scrollTransition
-//                = new TranslateTransition(Duration.millis(400), scrollPane);
-//
-//        // Preview
-//        TranslateTransition previewTransition
-//                = new TranslateTransition(Duration.millis(400), anchorImagePreview);
-//
-//        if (aberto) {
-//            // Fechar painel
-//            panelTransition.setToX(335);
-//
-//            scrollTransition.setToX(0);
-//            previewTransition.setToX(0);
-//
-//        } else {
-//            // Abrir painel
-//            panelTransition.setToX(0);
-//
-//            scrollTransition.setToX(-295);
-//            previewTransition.setToX(-295);
-//        }
-//
-//        panelTransition.play();
-//        scrollTransition.play();
-//        previewTransition.play();
-//    }
     @FXML
     void rotateImageLeft(ActionEvent event) {
         imageService.rotateImageLeft();
@@ -564,6 +506,7 @@ public class PleaseProvideControllerClassName implements Initializable {
         txtAreaNotes.setTextFormatter(formatter);
 
         imageService = new ImageService(anchorImagePreview);
+        imageMetadataService = new ImageMetadataService();
         imgModel = new ImageModel();
         //        Inicializa logo 
         imageService.setImagePreview(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString());
@@ -714,18 +657,13 @@ public class PleaseProvideControllerClassName implements Initializable {
     private void showProps(Path path) {
         try {
 
-            imgModel.fromImage(path.toString());
+            imgModel = imageMetadataService.analyze(path.toString());
             Main.setData(imgModel);
 
             labMaker.setText(imgModel.getDeviceInfo().getMake() == null ? "N/A" : imgModel.getDeviceInfo().getMake());
             labModel.setText(imgModel.getDeviceInfo().getModel() == null ? "N/A" : imgModel.getDeviceInfo().getModel());
             labSoftware.setText(imgModel.getDeviceInfo().getSoftware() == null ? "N/A" : imgModel.getDeviceInfo().getSoftware());
 
-            labLatitude.setText(String.valueOf(
-                    String.format("%.4f",
-                            imgModel.getGpsInfo().getLatitude() == null ? "0.11111" : imgModel.getGpsInfo().getLatitude()
-                    )
-            ));
             labLatitude.setText(imgModel.getGpsInfo().getLatitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getLatitude()));
             labLongitude.setText(imgModel.getGpsInfo().getLongitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getLongitude()));
             labAltitude.setText(imgModel.getGpsInfo().getAltitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getAltitude()));
@@ -734,23 +672,18 @@ public class PleaseProvideControllerClassName implements Initializable {
             labCity.setText(imgModel.getGpsInfo().getCity() == null ? "N/A" : imgModel.getGpsInfo().getCity());
             labRegion.setText(imgModel.getGpsInfo().getDistrict() == null ? "N/A" : imgModel.getGpsInfo().getDistrict());
 
-            labExposureTime.setText(String.valueOf(imgModel.getImageSpecification().getExposureTime() == null ? "N/A" : imgModel.getImageSpecification().getExposureTime()));
-            labShutterSpeedValue.setText(String.valueOf(imgModel.getImageSpecification().getShutterSpeedValue() == null ? "N/A" : imgModel.getImageSpecification().getShutterSpeedValue()));
-            labISOSpeedRating.setText(String.valueOf(imgModel.getImageSpecification().getIsoSpeedRatings() == null ? "N/A" : imgModel.getImageSpecification().getIsoSpeedRatings()));
-            labFocalLength.setText(String.valueOf(imgModel.getImageSpecification().getFocalLength() == null ? "N/A" : imgModel.getImageSpecification().getFocalLength()));
-            labFocalLengthIn35mmFilm.setText(String.valueOf(imgModel.getImageSpecification().getFocalLengthIn35mmFilm() == null ? "N/A" : imgModel.getImageSpecification().getFocalLengthIn35mmFilm()));
+            labExposureTime.setText(imgModel.getImageSpecification().getExposureTime() == null ? "N/A" : String.format("%.4f", imgModel.getImageSpecification().getExposureTime()));
+            labShutterSpeedValue.setText(imgModel.getImageSpecification().getShutterSpeedValue()== null ? "N/A" : String.format("%.4f", imgModel.getImageSpecification().getShutterSpeedValue()));
+            labISOSpeedRating.setText(imgModel.getImageSpecification().getIsoSpeedRatings()== null ? "N/A" : String.format("%.2f", imgModel.getImageSpecification().getIsoSpeedRatings()));
+            labFocalLength.setText(imgModel.getImageSpecification().getFocalLength()== null ? "N/A" : String.format("%.2f", imgModel.getImageSpecification().getFocalLength()));
+            labFocalLengthIn35mmFilm.setText(imgModel.getImageSpecification().getFocalLengthIn35mmFilm()== null ? "N/A" : String.format("%.4f", imgModel.getImageSpecification().getFocalLengthIn35mmFilm()));
 
             labDateTimeOriginal.setText(imgModel.getImageDate().getDateTimeOriginal() == null ? "N/A" : imgModel.getImageDate().getDateTimeOriginal());
             labDateTimeDigitized.setText(imgModel.getImageDate().getDateTimeDigitized() == null ? "N/A" : imgModel.getImageDate().getDateTimeDigitized());
             labOffsetTime.setText(imgModel.getImageDate().getOffsetTime() == null ? "N/A" : imgModel.getImageDate().getOffsetTime());
         } catch (Exception ex) {
-//            System.err.println("Erro: " + ex);
             Main.setData("Error: " + ex);
             LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-//            System.err.println("____________________________________________________ ");
-//            throw new RuntimeException("Erro ao inserir contacto fornecedor", ex);
-//            throw new Exception("")
-//            
         }
 
     }
@@ -790,18 +723,9 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     @FXML
     void saveImageDetail(ActionEvent evt) throws IOException, Exception {
-//        imgModel.setNotes(txtAreaNotes.getText());
-//        FIleDetailReport.setFileName(imgModel.getFileName());
-//        FIleDetailReport.createFile(imgModel);
-//        PDFReport r = new PDFReport(imgModel);
-
-        // Usaer dentro de um loop para estrair todos nomes para pesquisar
-//        String nome = selectedImages.get(2).path.getFileName().toString();
-//        System.out.println("nome: " + nome);
-//        System.out.println("size: " + selectedImages.size());
         if (selectedImages.size() > 1) {
             for (int i = 0; i < selectedImages.size(); i++) {
-                imgModel.fromImage(selectedImages.get(i).path.toString());
+                imgModel = imageMetadataService.analyze(selectedImages.get(i).path.toString());
                 imgModel.setNotes(txtAreaNotes.getText());
                 PDFReport pdfReport = new PDFReport(imgModel);
                 if (pdfReport.closeDocumente()) {

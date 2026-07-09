@@ -12,11 +12,18 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 /**
+ * <p>Esta e a classe de entrada para o programa
+ * e atravez dela que se carrega a primeira janela no programa</p>
  *
  * @author JM-Tecnologias
+ * @version 1.0
+ * @since Junho de 2026
+ * 
  */
 public class Main extends Application {
-
+    /**
+     * Variavel que premite fazer a troca de dados/Informacao entre classes/interfaces 
+    */
     private static Object data;
 
     public static Object getData() {

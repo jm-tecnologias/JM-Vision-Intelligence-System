@@ -470,7 +470,7 @@
                                     </HBox>
                                     <HBox prefHeight="20.0" prefWidth="370.0">
                                        <children>
-                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Exposure Time:" textFill="WHITE">
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Exposure Time:" textFill="WHITE">
                                              <font>
                                                 <Font name="Berlin Sans FB" size="18.0" />
                                              </font>
@@ -484,7 +484,7 @@
                                     </HBox>
                                     <HBox prefHeight="21.0" prefWidth="370.0">
                                        <children>
-                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Shutter Speed Value:" textFill="WHITE">
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Shutter Speed Value:" textFill="WHITE">
                                              <font>
                                                 <Font name="Berlin Sans FB" size="18.0" />
                                              </font>
@@ -498,7 +498,7 @@
                                     </HBox>
                                     <HBox prefHeight="23.0" prefWidth="370.0">
                                        <children>
-                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="ISO Speed Ratings:" textFill="WHITE">
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="ISO Speed Ratings:" textFill="WHITE">
                                              <font>
                                                 <Font name="Berlin Sans FB" size="18.0" />
                                              </font>
@@ -512,7 +512,7 @@
                                     </HBox>
                                     <HBox prefHeight="23.0" prefWidth="370.0">
                                        <children>
-                                          <Label fx:id="lebFocalLength" minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Focal Length:" textFill="WHITE">
+                                          <Label fx:id="lebFocalLength" minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Focal Length:" textFill="WHITE">
                                              <font>
                                                 <Font name="Berlin Sans FB" size="18.0" />
                                              </font>
@@ -526,7 +526,7 @@
                                     </HBox>
                                     <HBox prefHeight="24.0" prefWidth="370.0">
                                        <children>
-                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="247.0" text="Focal Length In 35 mm Film:" textFill="WHITE">
+                                          <Label minWidth="-Infinity" prefHeight="25.0" prefWidth="220.0" text="Focal Length In 35 mm Film:" textFill="WHITE">
                                              <font>
                                                 <Font name="Berlin Sans FB" size="18.0" />
                                              </font>

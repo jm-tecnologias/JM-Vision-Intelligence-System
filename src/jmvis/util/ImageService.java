@@ -43,9 +43,6 @@ public class ImageService {
         Rectangle clip = new Rectangle();
         clip.widthProperty().bind(anchorImagePreview.widthProperty());
         clip.heightProperty().bind(anchorImagePreview.heightProperty());
-//        clip.setStyle(""
-//                + "-fx-background-radius: 20px;"
-//                + "-fx-border-radius:20px;");
         anchorImagePreview.setClip(clip);
         anchorImagePreview.setOnScroll(event -> {
             if (imageView == null) {
@@ -64,7 +61,6 @@ public class ImageService {
     }
 
     public String setImagePreview(String path) {
-//        Image image = new Image("file:" + path);
         Image image = new Image(
                 new File(path).toURI().toString(),
                 1920,
@@ -135,8 +131,6 @@ public class ImageService {
 
         RotateTransition rt = new RotateTransition(Duration.millis(400), imageView);
         imageView.setRotate(facotr);
-//        rt.setToAngle(facotr);s
-        // Atualiza continuamente enquanto gira
         rt.currentTimeProperty().addListener((obs, oldTime, newTime) -> {
             updateImageSize();
             centerImage();

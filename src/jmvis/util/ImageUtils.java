@@ -36,18 +36,4 @@ public class ImageUtils {
                     .collect(Collectors.toList());
         }
     }
-
-//    public static void main(String[] args) {
-//
-//        try {
-//            List<Path> images = listImages("C:\\Users\\JM-Tecnologias\\Documents\\JM-Image-Analyzer\\File Explore\\teste");
-//
-//            for (Path img : images) {
-//                System.out.println(img.toAbsolutePath());
-//            }
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

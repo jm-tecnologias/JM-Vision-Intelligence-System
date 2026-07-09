@@ -4,27 +4,9 @@
  */
 package jmvis.util;
 
-import com.drew.imaging.ImageMetadataReader;
-import com.drew.lang.GeoLocation;
-import com.drew.metadata.Directory;
-import com.drew.metadata.Metadata;
-import com.drew.metadata.exif.ExifIFD0Directory;
-import com.drew.metadata.exif.ExifSubIFDDirectory;
-import com.drew.metadata.exif.GpsDirectory;
-
 import java.io.File;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
-import java.nio.file.Paths;
-import javafx.stage.Modality;
-import jmvis.Main;
-import static jmvis.util.InternetCheck.hasInternet;
-import static jmvis.util.ReverseGeocoder.geoReverseDecoder;
-import org.json.JSONObject;
 
 /**
  *
@@ -36,11 +18,21 @@ public class ImageModel implements Serializable {
     private String absolutePath;
     private double size;
     private String notes;
-//    public final Boolean[] detailToReport = {false, false, false, false};
     private DeviceInfo deviceInfo;
     private GPSInfo gpsInfo;
     private ImageSpecification imageSpecification;
     private ImageDate imageDate;
+
+    public ImageModel() {
+        resetDetails();
+    }
+
+    public final void resetDetails() {
+        this.deviceInfo = new DeviceInfo();
+        this.gpsInfo = new GPSInfo(null, null, null);
+        this.imageSpecification = new ImageSpecification();
+        this.imageDate = new ImageDate();
+    }
 
     public class DeviceInfo implements Serializable {
 
@@ -87,7 +79,6 @@ public class ImageModel implements Serializable {
             this.latitude = latitude;
             this.longitude = longitude;
             this.altitude = altitude;
-            geoDecoder();
         }
 
         public Double getLatitude() {
@@ -132,23 +123,6 @@ public class ImageModel implements Serializable {
 
         public void setDistrict(String district) {
             this.district = district;
-        }
-
-        private void geoDecoder() {
-            JSONObject location;
-            if (hasInternet()) {
-                if (latitude != null && longitude != null) {
-                    JSONObject geoData = geoReverseDecoder(latitude, longitude);
-                    location = geoData.getJSONObject("address");
-                    country = location.optString("country");
-                    countryCode = location.optString("country_code");
-                    district = location.optString("district");
-                    city = location.optString("city");
-                }
-            } else {
-                Main.setData("Internet connection needed for more details");
-                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-            }
         }
     }
 
@@ -326,136 +300,12 @@ public class ImageModel implements Serializable {
         this.imageDate = imageDate;
     }
 
-//    public Boolean[] getDetailToReport() {
-//        return detailToReport;
-//    }
     public ImageModel fromImage(String imagePath) throws Exception {
-        File file = new File(imagePath);
-
-        Metadata metadata = ImageMetadataReader.readMetadata(file);
-
-//        ImageModel imageModel = new ImageModel();
-        ExifIFD0Directory ifd0 = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-        ExifSubIFDDirectory exif = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
-        GpsDirectory gps = metadata.getFirstDirectoryOfType(GpsDirectory.class);
-
-        if (ifd0 != null) {
-            DeviceInfo di = new DeviceInfo();
-
-            di.setMake(getString(ifd0, ExifIFD0Directory.TAG_MAKE));
-            di.setModel(getString(ifd0, ExifIFD0Directory.TAG_MODEL));
-            di.setSoftware(getString(ifd0, ExifIFD0Directory.TAG_SOFTWARE));
-            setDeviceInfo(di);
-        }
-
-        if (exif != null) {
-            ImageSpecification is = new ImageSpecification();
-            ImageDate id = new ImageDate();
-            is.setExposureTime(getDouble(exif, ExifSubIFDDirectory.TAG_EXPOSURE_TIME));
-            is.setShutterSpeedValue(getDouble(exif, ExifSubIFDDirectory.TAG_SHUTTER_SPEED));
-            is.setIsoSpeedRatings(getDouble(exif, ExifSubIFDDirectory.TAG_ISO_EQUIVALENT));
-            is.setFocalLength(getDouble(exif, ExifSubIFDDirectory.TAG_FOCAL_LENGTH));
-            is.setFocalLengthIn35mmFilm(getDouble(exif, ExifSubIFDDirectory.TAG_35MM_FILM_EQUIV_FOCAL_LENGTH));
-            is.setWhiteBalance(getDouble(exif, ExifSubIFDDirectory.TAG_WHITE_BALANCE_MODE));
-            is.setExifImageHeight(getDouble(exif, ExifSubIFDDirectory.TAG_EXIF_IMAGE_HEIGHT));
-            is.setExifImageWidth(getDouble(exif, ExifSubIFDDirectory.TAG_EXIF_IMAGE_WIDTH));
-            setImageSpecification(is);
-
-            id.setDateTimeOriginal(getString(exif, ExifSubIFDDirectory.TAG_DATETIME_ORIGINAL));
-            id.setDateTimeDigitized(getString(exif, ExifSubIFDDirectory.TAG_DATETIME_DIGITIZED));
-            id.setOffsetTime(getString(exif, 0x9010));
-            setImageDate(id);
-        }
-
-        if (gps != null) {
-            GeoLocation location = gps.getGeoLocation();
-            Double latitude = null;
-            Double longitude = null;
-            Double altitude = null;
-
-            if (location != null && !location.isZero()) {
-                latitude = location.getLatitude();
-                longitude = location.getLongitude();
-            }
-
-            altitude = getDouble(gps, GpsDirectory.TAG_ALTITUDE);
-
-            setGpsInfo(new GPSInfo(latitude, longitude, altitude));
-
-        }
-
-        setAbsolutePath(file.getAbsolutePath());
-        setFileName(file.getName());
-        calculateSize();
-
-        return this;
+        return new ImageMetadataService().loadInto(this, imagePath);
     }
 
     public List<ImageModel> batchAnalysis(String folderPath) throws Exception {
-        List<ImageModel> results = new ArrayList<>();
-
-        try (Stream<Path> paths = Files.walk(Paths.get(folderPath))) {
-            paths
-                    .filter(Files::isRegularFile)
-                    .filter(ImageModel::isImageFile)
-                    .forEach(path -> {
-                        try {
-                            results.add(fromImage(path.toString()));
-                        } catch (Exception e) {
-                            Main.setData("Error: " + e);
-                            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-                        }
-                    });
-        }
-
-        return results;
-    }
-
-    private static boolean isImageFile(Path path) {
-        String name = path.getFileName().toString().toLowerCase();
-
-        return name.endsWith(".jpg")
-                || name.endsWith(".jpeg")
-                || name.endsWith(".png")
-                || name.endsWith(".tif")
-                || name.endsWith(".tiff")
-                || name.endsWith(".webp")
-                || name.endsWith(".heic");
-    }
-
-    private static String getString(Directory directory, int tag) {
-        try {
-            if (directory == null || !directory.containsTag(tag)) {
-                return null;
-            }
-
-            return directory.getString(tag);
-        } catch (Exception e) {
-            Main.setData("Error: " + e);
-            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-            return null;
-        }
-    }
-
-    private static Double getDouble(Directory directory, int tag) {
-        try {
-            if (directory == null || !directory.containsTag(tag)) {
-                return null;
-            }
-
-//            Object value = directory.getObject(tag);
-//            if (value instanceof Rational rational) {
-//                return rational.doubleValue();
-//            }
-//            if (value instanceof Number number) {
-//                return number.doubleValue();
-//            }
-            return directory.getDoubleObject(tag);
-        } catch (Exception e) {
-            Main.setData("Error: " + e);
-            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-            return null;
-        }
+        return new ImageMetadataService().batchAnalysis(folderPath);
     }
 
 }

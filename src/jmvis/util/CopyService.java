@@ -12,9 +12,6 @@ import javafx.concurrent.Task;
 import java.nio.file.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import javafx.event.ActionEvent;
-import javafx.stage.Modality;
-import jmvis.Main;
 
 public class CopyService {
 
