@@ -10,8 +10,6 @@ import jmvis.util.TitleBarService;
 import javafx.scene.input.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,8 +49,9 @@ import jmvis.util.CopyService;
 import jmvis.util.FileManager;
 import jmvis.util.ImageModel;
 import jmvis.util.ImageMetadataService;
+import jmvis.util.ImageReportService;
 import jmvis.util.LoadAndMoveUtilities;
-import jmvis.util.PDFReport;
+import jmvis.util.MapService;
 
 /**
  * FXML Controller class
@@ -79,6 +78,8 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     private ImageService imageService;
     private ImageMetadataService imageMetadataService;
+    private ImageReportService imageReportService;
+    private MapService mapService;
     private ImageModel imgModel;
     private TitleBarService titlebarService;
     private FileManager fm;
@@ -351,26 +352,13 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     @FXML
     public void getMapView(ActionEvent e) {
-        if (imgModel.getGpsInfo() != null) {
-            if (imgModel.getGpsInfo().getLatitude() != null || imgModel.getGpsInfo().getLongitude() != null) {
-                try {
-                    String url = "https://www.google.com/maps?q=" + imgModel.getGpsInfo().getLatitude() + "," + imgModel.getGpsInfo().getLongitude();
-                    try {
-                        Desktop.getDesktop().browse(new URI(url));
-                    } catch (IOException ex) {
-                        Main.setData("Error: " + ex);
-                        LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-                    }
-                } catch (URISyntaxException ex) {
-                    Main.setData("Error: " + ex);
-                    LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-                }
-            } else {
-                Main.setData("Coordenates not set");
-                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-            }
-        } else {
+        try {
+            mapService.openLocation(imgModel);
+        } catch (IllegalArgumentException ex) {
             Main.setData("Coordenates not set");
+            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+        } catch (Exception ex) {
+            Main.setData("Error: " + ex);
             LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
         }
 
@@ -507,6 +495,8 @@ public class PleaseProvideControllerClassName implements Initializable {
 
         imageService = new ImageService(anchorImagePreview);
         imageMetadataService = new ImageMetadataService();
+        imageReportService = new ImageReportService(imageMetadataService);
+        mapService = new MapService();
         imgModel = new ImageModel();
         //        Inicializa logo 
         imageService.setImagePreview(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString());
@@ -723,24 +713,14 @@ public class PleaseProvideControllerClassName implements Initializable {
 
     @FXML
     void saveImageDetail(ActionEvent evt) throws IOException, Exception {
-        if (selectedImages.size() > 1) {
-            for (int i = 0; i < selectedImages.size(); i++) {
-                imgModel = imageMetadataService.analyze(selectedImages.get(i).path.toString());
-                imgModel.setNotes(txtAreaNotes.getText());
-                PDFReport pdfReport = new PDFReport(imgModel);
-                if (pdfReport.closeDocumente()) {
-                    Main.setData("Reports Genarated");
-                    LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-                }
-            }
-        } else {
-            imgModel.setNotes(txtAreaNotes.getText());
-            PDFReport r = new PDFReport(imgModel);
-            if (r.closeDocumente()) {
-                Main.setData("Report Genarated");
-                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
-            }
-        }
+        int generatedReports = imageReportService.generateReports(
+                getSelectedImagePaths(),
+                imgModel,
+                txtAreaNotes.getText()
+        );
+
+        Main.setData(generatedReports > 1 ? "Reports Genarated" : "Report Genarated");
+        LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
     }
 
     private static class ImageThumb {
