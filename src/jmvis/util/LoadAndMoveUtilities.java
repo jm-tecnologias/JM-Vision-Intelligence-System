@@ -5,8 +5,6 @@
 package jmvis.util;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -46,7 +44,7 @@ public class LoadAndMoveUtilities {
             }
         } catch (IOException ex) {
             Main.setData("Error: " + ex);
-            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
         }
     }
     /*

@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package jmvis.util;
+package jmvis.service;
 
+import jmvis.model.ImageModel;
 import java.nio.file.Path;
 import java.util.List;
+import jmvis.util.PDFReport;
 
 /**
  * Service responsible for preparing image data and generating PDF reports.

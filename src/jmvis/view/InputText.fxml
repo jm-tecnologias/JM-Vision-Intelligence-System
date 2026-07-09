@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="217.0" prefWidth="398.0" style="-fx-background-color: #000000b3;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jmvis.InputText">
+<AnchorPane id="AnchorPane" prefHeight="217.0" prefWidth="398.0" style="-fx-background-color: #000000b3;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jmvis.controller.InputText">
    <children>
-      <AnchorPane fx:id="anchorTitleBar" minHeight="-Infinity" prefHeight="45.0" prefWidth="398.0" style="-fx-background-color: #3e3e3e;" stylesheets="@styles/tabepane.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="anchorTitleBar" minHeight="-Infinity" prefHeight="45.0" prefWidth="398.0" style="-fx-background-color: #3e3e3e;" stylesheets="@../styles/tabepane.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="66.0" prefHeight="45.0" prefWidth="300.0" text="Input Text Dialog" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
@@ -28,7 +28,7 @@
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/close.png" />
+                              <Image url="@../assets/icons/close.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -39,12 +39,12 @@
       </AnchorPane>
       <HBox alignment="CENTER" layoutX="78.0" layoutY="155.0" spacing="10.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="90.0">
          <children>
-            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#confirm" prefHeight="39.0" prefWidth="70.0" style="-fx-cursor: hand; -fx-background-color: #000000b3;" styleClass="close" stylesheets="@styles/buttons.css" text="Yes" textFill="WHITE">
+            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#confirm" prefHeight="39.0" prefWidth="70.0" style="-fx-cursor: hand; -fx-background-color: #000000b3;" styleClass="close" stylesheets="@../styles/buttons.css" text="Yes" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold" size="24.0" />
                </font>
             </Button>
-            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="70.0" style="-fx-cursor: hand; -fx-background-color: #000000b3;" styleClass="close" stylesheets="@styles/buttons.css" text="No" textFill="WHITE">
+            <Button minWidth="-Infinity" mnemonicParsing="false" onAction="#close" prefHeight="39.0" prefWidth="70.0" style="-fx-cursor: hand; -fx-background-color: #000000b3;" styleClass="close" stylesheets="@../styles/buttons.css" text="No" textFill="WHITE">
                <font>
                   <Font name="Times New Roman Bold" size="24.0" />
                </font>
@@ -59,7 +59,7 @@
             <Font name="Berlin Sans FB" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="txtTextValue" layoutX="30.0" layoutY="113.0" style="-fx-border-color: #000000b3; -fx-border-width: 0px 0px 3px 0px; -fx-background-color: rgba(255, 255, 255, 0.15);" styleClass="text-color" stylesheets="@styles/buttons.css" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+      <TextField fx:id="txtTextValue" layoutX="30.0" layoutY="113.0" style="-fx-border-color: #000000b3; -fx-border-width: 0px 0px 3px 0px; -fx-background-color: rgba(255, 255, 255, 0.15);" styleClass="text-color" stylesheets="@../styles/buttons.css" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="Times New Roman" size="16.0" />
          </font>

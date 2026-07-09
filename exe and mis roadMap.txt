@@ -1,0 +1,78 @@
+java --module-path "C:\javafx\javafx-sdk-17\lib" --add-modules javafx.controls,javafx.fxml,javafx.swing,javafx.media,javafx.web -cp "dist\JMVisionIntelligenceSystem.jar;dist\lib\*" jmvis.Main
+
+jdeps --multi-release 17 --ignore-missing-deps --print-module-deps "dist\JMVisionIntelligenceSystem.jar"
+
+mkdir packaging
+
+jlink ^
+  --module-path "%JAVA_HOME%\jmods;C:\javafx\javafx-jmods-17" ^
+  --add-modules java.base,java.desktop,java.logging,java.xml,javafx.controls,javafx.fxml,javafx.swing,javafx.media,javafx.web ^
+  --output "packaging\runtime" ^
+  --strip-debug ^
+  --compress=2 ^
+  --no-header-files ^
+  --no-man-pages
+
+.\packaging\runtime\bin\java.exe --version
+
+jpackage ^
+  --type app-image ^
+  --name "JM Vision Intelligence System" ^
+  --app-version 1.0.0 ^
+  --vendor "JM-Tecnologias" ^
+  --input "dist" ^
+  --main-jar "JMVisionIntelligenceSystem.jar" ^
+  --main-class "jmvis.Main" ^
+  --runtime-image "packaging\runtime" ^
+  --dest "packaging\output" ^
+  --java-options "--add-modules=javafx.controls,javafx.fxml,javafx.swing,javafx.media,javafx.web" ^
+  --win-console
+
+"packaging\output\JM Vision Intelligence System\JM Vision Intelligence System.exe"
+
+jpackage ^
+  --type exe ^
+  --icon "packaging\icon.ico" ^
+  --name "JM Vision Intelligence System" ^
+  --app-version 1.0.0 ^
+  --vendor "JM-Tecnologias" ^
+  --input "dist" ^
+  --main-jar "JMVisionIntelligenceSystem.jar" ^
+  --main-class "jmvis.Main" ^
+  --runtime-image "packaging\runtime" ^
+  --dest "packaging\installer" ^
+  --java-options "--add-modules=javafx.controls,javafx.fxml,javafx.swing,javafx.media,javafx.web" ^
+  --win-dir-chooser ^
+  --win-menu ^
+  --win-shortcut
+
+jpackage ^
+  --type msi ^
+  --icon "packaging\icon.ico" ^
+  --name "JM Vision Intelligence System" ^
+  --app-version 1.0.0 ^
+  --vendor "JM-Tecnologias" ^
+  --input "dist" ^
+  --main-jar "JMVisionIntelligenceSystem.jar" ^
+  --main-class "jmvis.Main" ^
+  --runtime-image "packaging\runtime" ^
+  --dest "packaging\installer" ^
+  --java-options "--add-modules=javafx.controls,javafx.fxml,javafx.swing,javafx.media,javafx.web" ^
+  --win-dir-chooser ^
+  --win-menu ^
+  --win-shortcut ^
+  --win-per-user-install
+
+
+
+
+Gerar o JAR no NetBeans.
+Testar o JAR com JavaFX.
+Instalar JavaFX JMODS.
+Criar runtime com jlink.
+Gerar app-image com jpackage.
+Testar o .exe dentro da pasta app-image.
+Instalar WiX Toolset.
+Gerar .exe.
+Gerar .msi.
+Testar em uma maquina limpa, sem JDK instalado.

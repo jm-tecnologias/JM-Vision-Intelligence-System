@@ -43,7 +43,7 @@ public class FIleDetailReport {
 //                writeFile(o);
 //            } catch (IOException ex) {
 //                Main.setData("FIleDetailReport Error: " + ex);
-//                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+//                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //                throw new IOException("Error: " + ex);
 //            }
 //        }
@@ -62,10 +62,10 @@ public class FIleDetailReport {
 //
 //        } catch (FileNotFoundException ex) {
 //            Main.setData("Error: " + ex);
-//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //        } catch (IOException ex) {
 //            Main.setData("Error: " + ex);
-//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //        }
 //    }
 //
@@ -84,13 +84,13 @@ public class FIleDetailReport {
 //
 //        } catch (FileNotFoundException ex) {
 //            Main.setData("Error: " + ex);
-//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //        } catch (IOException ex) {
 //            Main.setData("Error: " + ex);
-//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //        } catch (ClassNotFoundException ex) {
 //            Main.setData("Error: " + ex);
-//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+//            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //        }
 //        return obj;
 //    }

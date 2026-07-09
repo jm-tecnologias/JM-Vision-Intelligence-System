@@ -18,9 +18,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="980.0" prefWidth="1363.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jmvis.PleaseProvideControllerClassName">
+<AnchorPane fx:id="anchorFrame" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="980.0" prefWidth="1363.0" style="-fx-background-color: #252525;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="jmvis.controller.MainViewController">
     <children>
-      <AnchorPane fx:id="anchorTitleBar" minHeight="-Infinity" prefHeight="45.0" prefWidth="1305.0" style="-fx-background-color: #3e3e3e;" stylesheets="@styles/tabepane.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="anchorTitleBar" minHeight="-Infinity" prefHeight="45.0" prefWidth="1305.0" style="-fx-background-color: #3e3e3e;" stylesheets="@../styles/tabepane.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="66.0" prefHeight="45.0" prefWidth="1297.0" text="JM Vision Intelligence System" textFill="WHITE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="66.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
@@ -36,7 +36,7 @@
                      <graphic>
                         <ImageView fitHeight="41.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/pallet.png" />
+                              <Image url="@../assets/icons/pallet.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -51,7 +51,7 @@
                      <graphic>
                         <ImageView fitHeight="41.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/scroll.png" />
+                              <Image url="@../assets/icons/scroll.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -70,7 +70,7 @@
                      <graphic>
                         <ImageView fitHeight="41.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/props.png" />
+                              <Image url="@../assets/icons/props.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -86,7 +86,7 @@
                      <graphic>
                         <ImageView fitHeight="84.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/minimize.png" />
+                              <Image url="@../assets/icons/minimize.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -101,7 +101,7 @@
                      <graphic>
                         <ImageView fitHeight="84.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/maximize.png" />
+                              <Image url="@../assets/icons/maximize.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -110,7 +110,7 @@
                      <graphic>
                         <ImageView fitHeight="84.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/close.png" />
+                              <Image url="@../assets/icons/close.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -121,21 +121,21 @@
       </AnchorPane>
       <ImageView fitHeight="110.0" fitWidth="100.0" layoutX="-15.0" layoutY="-10.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@assets/LOGO.png" />
+            <Image url="@../assets/LOGO.png" />
          </image>
       </ImageView>
       <AnchorPane fx:id="anchorImagePreview" layoutY="45.0" prefHeight="630.0" prefWidth="1163.0" style="-fx-background-color: transparent; -fx-background-radius: 20px;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0" />
-      <AnchorPane fx:id="anchorPallet" layoutY="45.0" prefHeight="707.0" prefWidth="320.0" styleClass="glass-effect" stylesheets="@styles/tabepane.css" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="45.0">
+      <AnchorPane fx:id="anchorPallet" layoutY="45.0" prefHeight="707.0" prefWidth="320.0" styleClass="glass-effect" stylesheets="@../styles/tabepane.css" AnchorPane.bottomAnchor="45.0" AnchorPane.topAnchor="45.0">
          <children>
             <AnchorPane prefHeight="32.0" prefWidth="200.0" style="-fx-background-color: #0f75bb;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <TreeView fx:id="treePalette" prefHeight="200.0" prefWidth="320.0" stylesheets="@styles/treeViewStyles.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <TreeView fx:id="treePalette" prefHeight="200.0" prefWidth="320.0" stylesheets="@../styles/treeViewStyles.css" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="188.0" spacing="3.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Button fx:id="btnMakeDir" mnemonicParsing="false" onAction="#makeDir" prefHeight="30.0" prefWidth="30.0" style="-fx-background-color: transparent; -fx-cursor: hand;">
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/add_folder.png" />
+                              <Image url="@../assets/icons/add_folder.png" />
                            </image>
                         </ImageView>
                      </graphic></Button>
@@ -143,7 +143,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/edit.png" />
+                              <Image url="@../assets/icons/edit.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -152,7 +152,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/trash.png" />
+                              <Image url="@../assets/icons/trash.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -161,7 +161,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/import.png" />
+                              <Image url="@../assets/icons/import.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -170,7 +170,7 @@
                      <graphic>
                         <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons/refresh.png" />
+                              <Image url="@../assets/icons/refresh.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -191,7 +191,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/icons/next.png" />
+                                    <Image url="@../assets/icons/next.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -211,7 +211,7 @@
                            <graphic>
                               <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/icons/next.png" />
+                                    <Image url="@../assets/icons/next.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -241,7 +241,7 @@
                            <graphic>
                               <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@assets/icons/link.png" />
+                                    <Image url="@../assets/icons/link.png" />
                                  </image>
                               </ImageView>
                            </graphic>
@@ -255,9 +255,9 @@
             </AnchorPane>
          </children>
       </HBox>
-      <HBox fx:id="tabPaneProps" layoutX="1030.0" layoutY="50.0" style="-fx-background-color: #000000b3;" styleClass="glass-effect" stylesheets="@styles/tabepane.css" translateX="335.0" AnchorPane.bottomAnchor="225.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+      <HBox fx:id="tabPaneProps" layoutX="1030.0" layoutY="50.0" style="-fx-background-color: #000000b3;" styleClass="glass-effect" stylesheets="@../styles/tabepane.css" translateX="335.0" AnchorPane.bottomAnchor="225.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
          <children>
-            <TabPane prefHeight="692.0" prefWidth="333.0" styleClass="tab-header-background" stylesheets="@styles/tabepane.css" tabClosingPolicy="UNAVAILABLE">
+            <TabPane prefHeight="692.0" prefWidth="333.0" styleClass="tab-header-background" stylesheets="@../styles/tabepane.css" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Details">
                      <content>
@@ -269,7 +269,7 @@
                                        <children>
                                           <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@assets/icons/lentes-da-camera.png" />
+                                                <Image url="@../assets/icons/lentes-da-camera.png" />
                                              </image>
                                           </ImageView>
                                           <Label alignment="CENTER" contentDisplay="CENTER" text="Device Details" textFill="#41c0b5">
@@ -332,7 +332,7 @@
                                        <children>
                                           <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@assets/icons/placeholder.png" />
+                                                <Image url="@../assets/icons/placeholder.png" />
                                              </image>
                                           </ImageView>
                                           <Label alignment="CENTER" contentDisplay="CENTER" text="GPS Details" textFill="#41c0b5">
@@ -455,7 +455,7 @@
                                        <children>
                                           <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@assets/icons/project-management.png" />
+                                                <Image url="@../assets/icons/project-management.png" />
                                              </image>
                                           </ImageView>
                                           <Label alignment="CENTER" contentDisplay="CENTER" text="Image Specifications" textFill="#41c0b5">
@@ -546,7 +546,7 @@
                                        <children>
                                           <ImageView fitHeight="45.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@assets/icons/data-limite.png" />
+                                                <Image url="@../assets/icons/data-limite.png" />
                                              </image>
                                           </ImageView>
                                           <Label alignment="CENTER" contentDisplay="CENTER" text="Date Datails" textFill="#41c0b5">
@@ -617,7 +617,7 @@
                      <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TextArea fx:id="txtAreaNotes" prefHeight="269.0" prefWidth="313.0" promptText="Image Notes" styleClass="text-area-color" stylesheets="@styles/buttons.css" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+                              <TextArea fx:id="txtAreaNotes" prefHeight="269.0" prefWidth="313.0" promptText="Image Notes" styleClass="text-area-color" stylesheets="@../styles/buttons.css" wrapText="true" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                                  <font>
                                     <Font name="Times New Roman" size="22.0" />
                                  </font>
@@ -644,7 +644,7 @@
             </TabPane>
          </children>
       </HBox>
-      <ScrollPane fx:id="scrollPane" prefHeight="170.0" prefWidth="1363.0" style="-fx-background-color: #000000b3;" stylesheets="@styles/scrollpane.css" vbarPolicy="NEVER" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="10.0">
+      <ScrollPane fx:id="scrollPane" prefHeight="170.0" prefWidth="1363.0" style="-fx-background-color: #000000b3;" stylesheets="@../styles/scrollpane.css" vbarPolicy="NEVER" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="10.0">
          <content>
             <AnchorPane prefHeight="140.0" prefWidth="1007.0" style="-fx-background-color: transparent;">
                <children>
@@ -663,6 +663,9 @@
                <font>
                   <Font name="Times New Roman" size="16.0" />
                </font>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </Label>
          </children>
       </AnchorPane>

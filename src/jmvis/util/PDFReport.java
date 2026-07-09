@@ -35,6 +35,7 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import javafx.stage.Modality;
 import jmvis.Main;
+import jmvis.model.ImageModel;
 
 /**
  *
@@ -65,6 +66,13 @@ public class PDFReport {
             );
             this.pdfDocs.addNewPage();
             this.document = new Document(pdfDocs);
+            // Adiciona logo no header
+            ImageData data = ImageDataFactory.create(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString());
+            Image img = new Image(data);
+            img.scaleToFit(150, 150);           // largura x altura máximas
+            img.setFixedPosition(0, 730);      // posição absoluta (x, y)
+            img.setHorizontalAlignment(HorizontalAlignment.CENTER); // centro
+            this.document.add(img);
             // metodos que executam outras funcoes aqui
             createHeader();
 
@@ -82,7 +90,7 @@ public class PDFReport {
             closeDocumente();
         } catch (FileNotFoundException ex) {
             Main.setData("Error: " + ex);
-            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //            throw new IllegalStateException("M"+ex.getMessage());
         }
     }
@@ -113,11 +121,10 @@ public class PDFReport {
 //                //                .setBackgroundColor(myColor)
 //                .setBorder(Border.NO_BORDER);
 
-        Image icon = new Image(ImageDataFactory.create(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString()))
-                .scaleToFit(50, 50);
-
+//        Image icon = new Image(ImageDataFactory.create(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString()))
+//                .scaleToFit(50, 50);
         Paragraph p = new Paragraph()
-                .add(icon)
+                //                .add(icon)
                 .add(" JM Tecnologias")
                 .setFont(bold)
                 .setFontSize(16)
@@ -125,11 +132,15 @@ public class PDFReport {
 //                .setVerticalAlignment(VerticalAlignment.TOP);
 
         Cell c1 = new Cell()
-                .add(p)
+                .add(new Paragraph("JM Tecnologias")
+                        .setFont(bold)
+                        .setFontSize(14)
+                        .setFontColor(myColor))
+                .setTextAlignment(TextAlignment.CENTER)
                 .setBorder(Border.NO_BORDER);
 
         Cell c2 = new Cell()
-                .add(new Paragraph("JM Vision Intelligence System Report")
+                .add(new Paragraph("JM Vision Intelligence System")
                         .setFont(bold)
                         .setFontSize(14)
                         .setFontColor(ColorConstants.BLACK))
@@ -137,11 +148,12 @@ public class PDFReport {
                 .setBorder(Border.NO_BORDER);
 
         // Linha 2
-        Cell c3 = new Cell().add(new Paragraph("JM-Tecnologias, SU, LDA")
+        Cell c3 = new Cell().add(new Paragraph(". JM-Tecnologias, SU, LDA")
                 .setFont(normal)
-                .setFontSize(10)
-                .setFontColor(ColorConstants.BLACK)
-        ).setBorder(Border.NO_BORDER);
+                        .setFontSize(10)
+                        .setFontColor(ColorConstants.BLACK))
+                .setTextAlignment(TextAlignment.CENTER)
+                .setBorder(Border.NO_BORDER);
 
         Cell c4 = new Cell().add(new Paragraph("Issue Date:" + hoje)
                 .setFont(normal)
@@ -151,7 +163,7 @@ public class PDFReport {
                 .setBorder(Border.NO_BORDER);
 
         // Linha 3
-        Cell c5 = new Cell().add(new Paragraph("Maputo | www.jm-tecnologias.co.mz | comercial@jm-tecnologias.co.mz")
+        Cell c5 = new Cell(1, 2).add(new Paragraph("Maputo | www.jm-tecnologias.co.mz | comercial@jm-tecnologias.co.mz")
                 .setFont(normal)
                 .setFontSize(10)
                 .setFontColor(ColorConstants.BLACK)
@@ -292,7 +304,7 @@ public class PDFReport {
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
-                        .setTextAlignment(TextAlignment.LEFT);
+                .setTextAlignment(TextAlignment.LEFT);
 
         // Linha 6
         Cell c11 = new Cell()
@@ -395,7 +407,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c4 = new Cell()
-                .add(new Paragraph(imgModel.getImageSpecification().getIsoSpeedRatings() == null ? "N/A" : imgModel.getImageSpecification().getIsoSpeedRatings()+"")
+                .add(new Paragraph(imgModel.getImageSpecification().getIsoSpeedRatings() == null ? "N/A" : imgModel.getImageSpecification().getIsoSpeedRatings() + "")
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
@@ -410,7 +422,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c6 = new Cell()
-                .add(new Paragraph(imgModel.getImageSpecification().getExposureTime() == null ? "N/A" : imgModel.getImageSpecification().getExposureTime()+"")
+                .add(new Paragraph(imgModel.getImageSpecification().getExposureTime() == null ? "N/A" : imgModel.getImageSpecification().getExposureTime() + "")
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
@@ -425,7 +437,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c8 = new Cell()
-                .add(new Paragraph(imgModel.getImageSpecification().getShutterSpeedValue() == null ? "N/A" : imgModel.getImageSpecification().getShutterSpeedValue()+"")
+                .add(new Paragraph(imgModel.getImageSpecification().getShutterSpeedValue() == null ? "N/A" : imgModel.getImageSpecification().getShutterSpeedValue() + "")
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
@@ -440,7 +452,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c10 = new Cell()
-                .add(new Paragraph(imgModel.getImageSpecification().getFocalLength() == null ? "N/A" : imgModel.getImageSpecification().getFocalLength()+"")
+                .add(new Paragraph(imgModel.getImageSpecification().getFocalLength() == null ? "N/A" : imgModel.getImageSpecification().getFocalLength() + "")
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
@@ -455,7 +467,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c12 = new Cell()
-                .add(new Paragraph(imgModel.getImageSpecification().getFocalLengthIn35mmFilm() == null ? "N/A" : imgModel.getImageSpecification().getFocalLengthIn35mmFilm()+"")
+                .add(new Paragraph(imgModel.getImageSpecification().getFocalLengthIn35mmFilm() == null ? "N/A" : imgModel.getImageSpecification().getFocalLengthIn35mmFilm() + "")
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
@@ -470,7 +482,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c14 = new Cell()
-                .add(new Paragraph(imgModel.getImageSpecification().getWhiteBalance() == null ? "N/A" : imgModel.getImageSpecification().getWhiteBalance()+"")
+                .add(new Paragraph(imgModel.getImageSpecification().getWhiteBalance() == null ? "N/A" : imgModel.getImageSpecification().getWhiteBalance() + "")
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
@@ -538,7 +550,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c4 = new Cell()
-                .add(new Paragraph(String.valueOf(imgModel.getGpsInfo().getLongitude()== null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getLongitude())))
+                .add(new Paragraph(String.valueOf(imgModel.getGpsInfo().getLongitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getLongitude())))
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
@@ -553,7 +565,7 @@ public class PDFReport {
                 .setTextAlignment(TextAlignment.LEFT);
 
         Cell c6 = new Cell()
-                .add(new Paragraph(String.valueOf(imgModel.getGpsInfo().getAltitude()== null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getAltitude())))
+                .add(new Paragraph(String.valueOf(imgModel.getGpsInfo().getAltitude() == null ? "N/A" : String.format("%.4f", imgModel.getGpsInfo().getAltitude())))
                         .setFont(bold)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))

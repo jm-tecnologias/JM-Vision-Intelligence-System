@@ -4,6 +4,7 @@
  */
 package jmvis.util;
 
+import jmvis.model.ImageModel;
 import javafx.scene.control.Label;
 
 /**

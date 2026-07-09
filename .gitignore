@@ -3,3 +3,5 @@ impostantFiles/
 lib/
 dist/
 build/
+packaging/
+test/

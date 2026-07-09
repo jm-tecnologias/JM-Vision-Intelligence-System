@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package jmvis;
+package jmvis.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,8 +13,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import jmvis.Main;
 import jmvis.util.LoadAndMoveUtilities;
-import jmvis.util.TitleBarService;
+import jmvis.service.TitleBarService;
 
 /**
  * FXML Controller class

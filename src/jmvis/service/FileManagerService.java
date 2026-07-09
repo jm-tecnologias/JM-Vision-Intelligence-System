@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package jmvis.util;
+package jmvis.service;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,12 +11,13 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import javafx.stage.Modality;
 import jmvis.Main;
+import jmvis.util.LoadAndMoveUtilities;
 
 /**
  *
  * @author JM-Tecnologias
  */
-public final class FileManager {
+public final class FileManagerService {
 
     private final Path docs = Paths.get(System.getProperty("user.home"), "Documents");
     private Path reportPath = Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/Report");
@@ -24,7 +25,7 @@ public final class FileManager {
     private Path dstFolder;
     private Path root;
 
-    public FileManager() {
+    public FileManagerService() {
 
         this.root = Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/File Explore");
         this.reportPath = Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/Report");
@@ -34,7 +35,7 @@ public final class FileManager {
                 Files.createDirectories(this.root);
             } catch (IOException ex) {
                 Main.setData("Error: " + ex);
-                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //                throw new IllegalAccessError("error: "+ex);
             }
         }
@@ -43,7 +44,7 @@ public final class FileManager {
                 Files.createDirectories(this.reportPath);
             } catch (IOException ex) {
                 Main.setData("Error: " + ex);
-                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //                throw new IllegalAccessError("error: "+ex);
             }
         }
@@ -53,7 +54,7 @@ public final class FileManager {
                 Files.createDirectories(this.baseimages);
             } catch (IOException ex) {
                 Main.setData("Error: " + ex);
-                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/ConfirForm.fxml");
+                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
 //                throw new IllegalAccessError("error: "+ex);
             }
         }
