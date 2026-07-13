@@ -262,6 +262,16 @@ Esse ficheiro cobre o uso de:
 
 ---
 
+## Documentacao de concepcao
+
+A documentacao completa de engenharia, desde a elicitacao de requisitos ate deploy, manutencao e melhorias futuras, esta em:
+
+```text
+DOCUMENTACAO_CONCEPCAO.md
+```
+
+---
+
 ## Roadmap
 
 - [x] Leitura de metadados EXIF.

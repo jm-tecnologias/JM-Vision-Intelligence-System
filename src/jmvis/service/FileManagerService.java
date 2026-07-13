@@ -19,10 +19,9 @@ import jmvis.util.LoadAndMoveUtilities;
  */
 public final class FileManagerService {
 
-    private final Path docs = Paths.get(System.getProperty("user.home"), "Documents");
-    private Path reportPath = Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/Report");
+    private Path data;
+    private Path reportPath;
     private Path baseimages;
-    private Path dstFolder;
     private Path root;
 
     public FileManagerService() {
@@ -30,6 +29,7 @@ public final class FileManagerService {
         this.root = Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/File Explore");
         this.reportPath = Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/Report");
         this.baseimages = Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem");
+        this.data =  Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/Data");
         if (!Files.exists(this.root)) {
             try {
                 Files.createDirectories(this.root);
@@ -52,6 +52,16 @@ public final class FileManagerService {
         if (!Files.exists(this.baseimages)) {
             try {
                 Files.createDirectories(this.baseimages);
+            } catch (IOException ex) {
+                Main.setData("Error: " + ex);
+                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
+//                throw new IllegalAccessError("error: "+ex);
+            }
+        }
+        
+        if (!Files.exists(this.data)) {
+            try {
+                Files.createDirectories(this.data);
             } catch (IOException ex) {
                 Main.setData("Error: " + ex);
                 LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");

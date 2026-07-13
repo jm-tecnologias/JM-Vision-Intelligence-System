@@ -7,22 +7,73 @@ package jmvis.service;
 import jmvis.model.ImageModel;
 import java.nio.file.Path;
 import java.util.List;
+import javafx.stage.Modality;
+import jmvis.Main;
+import jmvis.util.LoadAndMoveUtilities;
 import jmvis.util.PDFReport;
+import jmvis.util.TrialControllerUtil;
 
 /**
  * Service responsible for preparing image data and generating PDF reports.
  *
  * @author JM-Tecnologias
  */
+/*
+Versao original
+ */
+//public class ImageReportService {
+//
+//    private final ImageMetadataService imageMetadataService;
+//
+//    public ImageReportService(ImageMetadataService imageMetadataService) {
+//        this.imageMetadataService = imageMetadataService;
+//    }
+//
+//    public int generateReports(List<Path> selectedImages, ImageModel currentImage, String notes) throws Exception {
+//        
+//        if (selectedImages != null && selectedImages.size() > 1) {
+//            return generateSelectedReports(selectedImages, notes);
+//        }
+//
+//        return generateCurrentReport(currentImage, notes);
+//    }
+//
+//    private int generateSelectedReports(List<Path> selectedImages, String notes) throws Exception {
+//        int generatedReports = 0;
+//
+//        for (Path path : selectedImages) {
+//            ImageModel imageModel = imageMetadataService.analyze(path.toString());
+//            imageModel.setNotes(notes);
+//            new PDFReport(imageModel);
+//            generatedReports++;
+//        }
+//
+//        return generatedReports;
+//    }
+//
+//    private int generateCurrentReport(ImageModel currentImage, String notes) throws Exception {
+//        if (currentImage == null || currentImage.getAbsolutePath() == null) {
+//                Main.setData("Image not selected");
+//                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
+//        }
+//
+//        currentImage.setNotes(notes);
+//        new PDFReport(currentImage);
+//        return 1;
+//    }
+//}
 public class ImageReportService {
 
     private final ImageMetadataService imageMetadataService;
+    private final TrialControllerUtil trailController;
 
     public ImageReportService(ImageMetadataService imageMetadataService) {
         this.imageMetadataService = imageMetadataService;
+        this.trailController = new TrialControllerUtil();
     }
 
     public int generateReports(List<Path> selectedImages, ImageModel currentImage, String notes) throws Exception {
+
         if (selectedImages != null && selectedImages.size() > 1) {
             return generateSelectedReports(selectedImages, notes);
         }
@@ -36,7 +87,13 @@ public class ImageReportService {
         for (Path path : selectedImages) {
             ImageModel imageModel = imageMetadataService.analyze(path.toString());
             imageModel.setNotes(notes);
-            new PDFReport(imageModel);
+            if (trailController.canUseProgram()) {
+                new PDFReport(imageModel);
+            } else {
+//                throw new IllegalArgumentException();
+                Main.setData("Limite de uso excedido ou licença expirada.");
+                LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
+            }
             generatedReports++;
         }
 
@@ -49,7 +106,12 @@ public class ImageReportService {
         }
 
         currentImage.setNotes(notes);
-        new PDFReport(currentImage);
+        if (trailController.canUseProgram()) {
+            new PDFReport(currentImage);
+        } else {
+            Main.setData("Limite de uso excedido ou licença expirada.");
+            LoadAndMoveUtilities.loadFXML(Modality.APPLICATION_MODAL, "/jmvis/view/ConfirForm.fxml");
+        }
         return 1;
     }
 }

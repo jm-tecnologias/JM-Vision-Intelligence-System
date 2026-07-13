@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual do Utilizador — JM Vision Intelligence System</title>
+  <style>
+    :root { --navy:#12324a; --blue:#0f75bb; --cyan:#17b5c3; --ink:#263238; --muted:#60717d; --pale:#eef7fa; --line:#cfe0e7; }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin:0; color:var(--ink); font:10.5pt/1.55 "Segoe UI", Arial, sans-serif; background:#dce7eb; }
+    main { max-width:210mm; margin:18px auto; background:#fff; box-shadow:0 5px 24px #18364533; }
+    .page { padding:18mm 17mm 17mm; min-height:270mm; position:relative; }
+    .cover { min-height:297mm; padding:27mm 20mm; color:#fff; overflow:hidden; background:linear-gradient(145deg,#102b40 0%,#0f75bb 67%,#17b5c3 100%); }
+    .cover:after { content:""; position:absolute; width:150mm; height:150mm; right:-55mm; bottom:-54mm; border:22mm solid #ffffff18; border-radius:50%; }
+    .cover img { width:58mm; max-height:32mm; object-fit:contain; object-position:left center; filter:drop-shadow(0 4px 8px #0006); }
+    .eyebrow { margin-top:38mm; text-transform:uppercase; letter-spacing:.18em; font-size:9pt; opacity:.85; }
+    .cover h1 { margin:5mm 0 2mm; color:#fff; font-size:30pt; line-height:1.08; max-width:155mm; }
+    .cover h2 { margin:0; color:#dffbff; font-weight:400; font-size:16pt; }
+    .cover .meta { position:absolute; bottom:26mm; left:20mm; border-left:1.5mm solid #7fe9f2; padding-left:5mm; }
+    h1,h2,h3 { color:var(--navy); line-height:1.22; page-break-after:avoid; }
+    h1 { font-size:24pt; margin:0 0 9mm; }
+    h2 { margin:9mm 0 4mm; padding-bottom:2mm; border-bottom:1px solid var(--line); font-size:17pt; }
+    h3 { margin:6mm 0 2mm; font-size:12.5pt; }
+    p { margin:0 0 3.2mm; }
+    a { color:var(--blue); text-decoration:none; }
+    ul,ol { margin:2mm 0 4mm 6mm; padding-left:5mm; }
+    li { margin:1.2mm 0; }
+    table { width:100%; border-collapse:collapse; margin:3mm 0 6mm; font-size:9.5pt; page-break-inside:auto; }
+    th { background:var(--navy); color:#fff; text-align:left; }
+    th,td { border:1px solid var(--line); padding:2.2mm 2.5mm; vertical-align:top; }
+    tr { page-break-inside:avoid; }
+    tr:nth-child(even) td { background:#f7fafb; }
+    code,.path { font-family:Consolas,monospace; font-size:9pt; overflow-wrap:anywhere; }
+    .callout { margin:4mm 0; padding:3.5mm 4mm; background:var(--pale); border-left:1.2mm solid var(--cyan); page-break-inside:avoid; }
+    .warning { background:#fff7e7; border-left-color:#f0a326; }
+    .danger { background:#fff0f0; border-left-color:#d9534f; }
+    .tip { background:#eef8f0; border-left-color:#39a35b; }
+    .toc { columns:2; column-gap:12mm; }
+    .toc a { display:block; border-bottom:1px dotted #aac0ca; padding:1.3mm 0; break-inside:avoid; }
+    .ui { display:grid; grid-template-columns:28% 45% 27%; grid-template-rows:12mm 55mm 25mm; border:1px solid #92abb6; border-radius:2mm; overflow:hidden; margin:4mm 0 6mm; color:#fff; font-size:8.5pt; text-align:center; page-break-inside:avoid; }
+    .ui div { padding:3mm 2mm; border:1px solid #ffffff26; }
+    .ui .bar { grid-column:1/4; background:#3e3e3e; text-align:left; }
+    .ui .tree { grid-row:2/4; background:#284355; }
+    .ui .preview { background:#20282d; }
+    .ui .props { grid-row:2/4; grid-column:3; background:#183746; }
+    .ui .controls { background:#33434b; }
+    .ui .thumbs { background:#40545d; }
+    .interface-shot { display:block; width:100%; max-height:78mm; object-fit:contain; object-position:center; margin:3mm 0 1.5mm; border:1px solid #92abb6; border-radius:2mm; background:#252525; }
+    .caption { margin:0 0 4mm; color:var(--muted); text-align:center; font-size:8.5pt; }
+    .steps { counter-reset:step; list-style:none; padding:0; margin-left:0; }
+    .steps li { position:relative; padding:0 0 4mm 12mm; min-height:9mm; }
+    .steps li:before { counter-increment:step; content:counter(step); position:absolute; left:0; top:0; width:7mm; height:7mm; border-radius:50%; color:#fff; background:var(--blue); text-align:center; line-height:7mm; font-weight:700; }
+    .kbd { display:inline-block; padding:.3mm 1.4mm; border:1px solid #aebbc1; border-bottom-width:2px; border-radius:1mm; background:#f8fafb; font:8.5pt Consolas,monospace; white-space:nowrap; }
+    .check { color:#178540; font-weight:700; }
+    .footer { position:absolute; bottom:7mm; left:17mm; right:17mm; color:#7b8b93; font-size:8pt; display:flex; justify-content:space-between; border-top:1px solid #dce6ea; padding-top:2mm; }
+    .no-print { text-align:center; padding:12px; background:#fff8d8; color:#5c501b; }
+    @page { size:A4; margin:0; }
+    @media print { body { background:#fff; } main { margin:0; max-width:none; box-shadow:none; } .no-print { display:none; } .page { break-after:page; } .page:last-child { break-after:auto; } }
+  </style>
+</head>
+<body>
+<div class="no-print">Versão editável para navegador. Use Imprimir → Guardar como PDF, se necessário.</div>
+<main>
+  <section class="cover page">
+    <img src="src/jmvis/assets/LOGO.png" alt="JM Tecnologias">
+    <div class="eyebrow">Documentação do produto</div>
+    <h1>Manual do Utilizador</h1>
+    <h2>JM Vision Intelligence System</h2>
+    <div class="meta"><strong>Versão do sistema:</strong> 1.0.0<br><strong>Edição do manual:</strong> 1.0 — Julho de 2026<br><strong>Entidade:</strong> JM Tecnologias</div>
+  </section>
+
+  <section class="page" id="inicio">
+    <h1>Sobre este manual</h1>
+    <p>Este manual orienta o utilizador na instalação e operação do <strong>JM Vision Intelligence System</strong>, uma aplicação Windows para organizar, visualizar e analisar tecnicamente imagens. O sistema centraliza a navegação por pastas, a leitura de metadados EXIF, a consulta de coordenadas GPS e a produção de relatórios PDF.</p>
+    <div class="callout"><strong>Público-alvo.</strong> Técnicos de imagem, profissionais de inspeção, investigação, documentação, fotografia, GIS/OSINT e demais utilizadores que necessitem de consultar e registar informação técnica de imagens.</div>
+    <h2>Índice</h2>
+    <nav class="toc">
+      <a href="#visao">1. Visão geral</a>
+      <a href="#requisitos">2. Requisitos e instalação</a>
+      <a href="#interface">3. Conhecer a interface</a>
+      <a href="#primeiros-passos">4. Primeiros passos</a>
+      <a href="#pastas">5. Gerir pastas</a>
+      <a href="#importar">6. Importar imagens</a>
+      <a href="#visualizar">7. Visualizar e navegar</a>
+      <a href="#metadados">8. Consultar metadados</a>
+      <a href="#mapa">9. Abrir a localização no mapa</a>
+      <a href="#relatorios">10. Criar e abrir relatórios</a>
+      <a href="#atalhos">11. Atalhos de teclado</a>
+      <a href="#ficheiros">12. Pastas usadas pelo sistema</a>
+      <a href="#problemas">13. Resolução de problemas</a>
+      <a href="#boas-praticas">14. Boas práticas</a>
+      <a href="#glossario">15. Glossário e apoio</a>
+    </nav>
+    <h2 id="visao">1. Visão geral</h2>
+    <p>O fluxo normal de utilização é: criar ou selecionar uma pasta de trabalho, importar imagens, escolher uma miniatura, analisar a imagem e os seus dados técnicos e, quando necessário, gerar um relatório.</p>
+    <table>
+      <tr><th>Função</th><th>Resultado</th></tr>
+      <tr><td>Organização</td><td>Criação, mudança de nome e eliminação de pastas na área própria do sistema.</td></tr>
+      <tr><td>Importação</td><td>Cópia de imagens de uma pasta externa para a pasta selecionada no sistema.</td></tr>
+      <tr><td>Visualização</td><td>Pré-visualização, miniaturas, zoom, deslocação, rotação e navegação sequencial.</td></tr>
+      <tr><td>Análise</td><td>Leitura de fabricante, modelo, software, parâmetros fotográficos, datas e GPS.</td></tr>
+      <tr><td>Geolocalização</td><td>Identificação aproximada de país/cidade/região e abertura no Google Maps.</td></tr>
+      <tr><td>Relatório</td><td>Criação de um PDF por imagem, incluindo pré-visualização, metadados e notas.</td></tr>
+    </table>
+    <div class="footer"><span>JM Vision Intelligence System</span><span>Manual do Utilizador · 2</span></div>
+  </section>
+
+  <section class="page" id="requisitos">
+    <h1>2. Requisitos e instalação</h1>
+    <h2>2.1 Requisitos recomendados</h2>
+    <ul>
+      <li>Computador com Microsoft Windows 10 ou Windows 11.</li>
+      <li>Permissão para instalar aplicações e gravar na pasta Documentos do utilizador.</li>
+      <li>Espaço livre suficiente para as imagens importadas e os relatórios.</li>
+      <li>Ligação à Internet para converter coordenadas em nomes de locais e abrir o mapa.</li>
+      <li>Navegador e leitor de PDF predefinidos no Windows.</li>
+    </ul>
+    <h2>2.2 Instalar pelo ficheiro EXE</h2>
+    <ol class="steps">
+      <li>Localize o ficheiro <strong>JM Vision Intelligence System-1.0.0.exe</strong>.</li>
+      <li>Faça duplo clique no instalador. Se o Windows pedir autorização, confirme apenas se o instalador veio de uma fonte confiável da JM Tecnologias.</li>
+      <li>Siga os passos apresentados pelo assistente de instalação.</li>
+      <li>Concluída a instalação, abra a aplicação pelo atalho criado ou pelo menu Iniciar.</li>
+    </ol>
+    <h2>2.3 Instalar pelo ficheiro MSI</h2>
+    <p>Em ambientes empresariais, o administrador pode instalar o pacote <strong>JM Vision Intelligence System-1.0.0.msi</strong>. O comportamento funcional da aplicação é o mesmo.</p>
+    <h2>2.4 Primeiro arranque</h2>
+    <p>No primeiro arranque, o sistema cria automaticamente a estrutura de trabalho em <span class="path">Documentos\JM Vision Intelligence</span>. A árvore de pastas aparece do lado esquerdo e começa na pasta <strong>File Explore</strong>.</p>
+    <div class="callout warning"><strong>Versão de avaliação.</strong> A versão atualmente implementada controla a utilização da emissão de relatórios. Quando o limite ou a validade forem atingidos, o sistema apresenta a mensagem “Limite de uso excedido ou licença expirada”. Contacte a JM Tecnologias para regularização.</div>
+    <h2>2.5 Encerrar, minimizar e maximizar</h2>
+    <p>Use os três botões no canto superior direito. O botão <strong>—</strong> minimiza, o botão quadrado maximiza/restaura e o botão <strong>×</strong> encerra imediatamente a aplicação.</p>
+    <div class="footer"><span>Instalação e arranque</span><span>Manual do Utilizador · 3</span></div>
+  </section>
+
+  <section class="page" id="interface">
+    <h1>3. Conhecer a interface</h1>
+    <img class="interface-shot" src="manual-assets/interface-principal.png" alt="Interface principal do JM Vision Intelligence System com uma imagem em pré-visualização">
+    <p class="caption">Figura 1 — Interface principal da aplicação em funcionamento, com imagem selecionada, metadados e galeria carregados.</p>
+    <table>
+      <tr><th>Área</th><th>Utilização</th></tr>
+      <tr><td>1. Barra de título</td><td>Permite arrastar a janela, ocultar painéis e controlar a janela.</td></tr>
+      <tr><td>2. Árvore de pastas</td><td>Apresenta apenas as pastas dentro de <strong>File Explore</strong>. A barra superior contém os comandos de gestão e importação.</td></tr>
+      <tr><td>3. Pré-visualização</td><td>Mostra a imagem escolhida. A roda do rato controla o zoom; o arrasto desloca a imagem ampliada.</td></tr>
+      <tr><td>4. Propriedades</td><td>O separador <strong>Details</strong> apresenta os metadados. O separador <strong>Set Report</strong> recebe notas e contém <strong>Export</strong> e <strong>Open</strong>.</td></tr>
+      <tr><td>5. Controlos</td><td>Navegação anterior/seguinte, rotação por cursor deslizante e abertura do mapa.</td></tr>
+      <tr><td>6. Galeria de miniaturas e barra de estado</td><td>Ocupam a zona inferior, ou <strong>footer</strong>, da tela. A galeria forma uma faixa horizontal ampla por baixo da pré-visualização e do painel de propriedades, apresentando as imagens da pasta selecionada e uma barra de deslocamento horizontal. A faixa azul no limite inferior é a barra de estado e estende-se por toda a largura da janela, mostrando mensagens de progresso, resultados e avisos.</td></tr>
+    </table>
+    <h2>Botões da árvore de pastas</h2>
+    <table>
+      <tr><th>Ícone</th><th>Ação</th><th>Condição</th></tr>
+      <tr><td>📁＋</td><td>Criar uma subpasta</td><td>Selecione primeiro a pasta onde a nova pasta será criada.</td></tr>
+      <tr><td>✎</td><td>Renomear a pasta selecionada</td><td>Introduza um nome válido e diferente.</td></tr>
+      <tr><td>🗑</td><td>Eliminar a pasta selecionada</td><td>A pasta deve estar vazia; escreva <strong>DELETE</strong> para confirmar.</td></tr>
+      <tr><td>⇩</td><td>Importar imagens</td><td>A pasta selecionada será o destino.</td></tr>
+      <tr><td>↻</td><td>Atualizar a árvore</td><td>Use após alterações externas ou se uma pasta não aparecer.</td></tr>
+    </table>
+    <div class="footer"><span>Interface principal</span><span>Manual do Utilizador · 4</span></div>
+  </section>
+
+  <section class="page" id="primeiros-passos">
+    <h1>4. Primeiros passos</h1>
+    <h2>Fluxo rápido recomendado</h2>
+    <ol class="steps">
+      <li>Na árvore à esquerda, selecione <strong>File Explore</strong>.</li>
+      <li>Crie uma pasta para o trabalho, caso ainda não exista.</li>
+      <li>Selecione a pasta criada e clique no botão de <strong>Importar</strong>.</li>
+      <li>Escolha a pasta externa onde estão as imagens e aguarde a conclusão.</li>
+      <li>Clique numa miniatura para abrir a imagem e carregar os metadados.</li>
+      <li>Consulte o separador <strong>Details</strong>; use o botão de mapa se existirem coordenadas.</li>
+      <li>No separador <strong>Set Report</strong>, escreva notas e clique em <strong>Export</strong>.</li>
+      <li>Clique em <strong>Open</strong>, escolha o PDF gerado e confirme o resultado.</li>
+    </ol>
+    <div class="callout tip"><strong>Dica.</strong> Organize as pastas por projeto, cliente, local ou data antes de importar. Isto facilita a pesquisa e evita misturar trabalhos diferentes.</div>
+    <h2 id="pastas">5. Gerir pastas</h2>
+    <h3>Criar uma pasta</h3>
+    <ol>
+      <li>Selecione a pasta principal na árvore.</li>
+      <li>Clique no ícone <strong>Criar pasta</strong>.</li>
+      <li>Em “Name for new folder”, escreva o nome e confirme com <strong>Yes</strong>.</li>
+      <li>A árvore é atualizada automaticamente.</li>
+    </ol>
+    <h3>Renomear uma pasta</h3>
+    <ol>
+      <li>Selecione a pasta que pretende alterar.</li>
+      <li>Clique no ícone <strong>Renomear</strong>, introduza o novo nome e confirme.</li>
+    </ol>
+    <div class="callout warning"><strong>Atenção.</strong> Não renomeie uma pasta enquanto outro programa estiver a usar ficheiros nela. Evite caracteres não permitidos pelo Windows: <code>\ / : * ? &quot; &lt; &gt; |</code>.</div>
+    <h3>Eliminar uma pasta</h3>
+    <ol>
+      <li>Confirme que a pasta está vazia e selecione-a.</li>
+      <li>Clique no ícone <strong>Eliminar</strong>.</li>
+      <li>Escreva exatamente <strong>DELETE</strong> e confirme.</li>
+    </ol>
+    <div class="callout danger"><strong>Eliminação definitiva.</strong> A operação não envia a pasta para a Reciclagem. Pastas com imagens ou subpastas não são eliminadas; remova ou mova o conteúdo antes.</div>
+    <div class="footer"><span>Primeiros passos e pastas</span><span>Manual do Utilizador · 5</span></div>
+  </section>
+
+  <section class="page" id="importar">
+    <h1>6. Importar imagens</h1>
+    <p>A importação copia as imagens existentes numa pasta externa para a pasta de destino selecionada na árvore. Os ficheiros originais permanecem na origem.</p>
+    <ol class="steps">
+      <li>Na árvore, selecione a pasta que deverá receber as imagens.</li>
+      <li>Clique no botão de <strong>Importar</strong>.</li>
+      <li>Na janela “Selecionar pasta de origem”, escolha a pasta onde estão as imagens.</li>
+      <li>Confirme a escolha e acompanhe o progresso na barra de estado.</li>
+      <li>Quando terminar, a galeria é atualizada e o sistema informa quantas imagens foram importadas.</li>
+    </ol>
+    <h2>Comportamento dos nomes</h2>
+    <p>Durante a importação, o sistema cria nomes a partir da pasta de destino e de uma numeração sequencial. Por exemplo, ao importar para a pasta <strong>Inspecao_A</strong>, os ficheiros podem ficar como <span class="path">Inspecao_A0.jpg</span>, <span class="path">Inspecao_A1.jpg</span> e assim sucessivamente.</p>
+    <div class="callout warning"><strong>Conservação dos nomes originais.</strong> Como a versão atual renomeia os ficheiros importados, mantenha uma cópia da pasta de origem se os nomes originais forem importantes para a cadeia de custódia ou rastreabilidade.</div>
+    <h2>Formatos de imagem</h2>
+    <p>Para visualização consistente na galeria, prefira <strong>JPG, JPEG, PNG, GIF, BMP ou WEBP</strong>. O importador também reconhece TIFF/TIF e HEIC, mas o suporte de pré-visualização pode depender do runtime e estes formatos podem não aparecer na galeria desta versão.</p>
+    <h2>Regras da importação</h2>
+    <ul>
+      <li>Apenas ficheiros presentes diretamente na pasta escolhida são copiados; subpastas não são importadas.</li>
+      <li>Ficheiros com o mesmo nome de destino podem ser substituídos.</li>
+      <li>Não feche a aplicação enquanto a barra de estado indicar que a importação está em curso.</li>
+      <li>Se cancelar a seleção da pasta de origem, nenhuma imagem é importada.</li>
+    </ul>
+    <h2 id="visualizar">7. Visualizar e navegar</h2>
+    <p>Selecione uma pasta na árvore para carregar as miniaturas. Clique numa miniatura para a apresentar no painel central e preencher automaticamente o separador de propriedades.</p>
+    <table>
+      <tr><th>Operação</th><th>Como fazer</th></tr>
+      <tr><td>Zoom</td><td>Coloque o ponteiro sobre a pré-visualização e rode a roda do rato para cima ou para baixo.</td></tr>
+      <tr><td>Deslocar (pan)</td><td>Prima o botão do rato sobre a imagem e arraste, especialmente após ampliar.</td></tr>
+      <tr><td>Rodar</td><td>Arraste o cursor deslizante entre −180° e +180°. Ao selecionar outra imagem, a posição do cursor volta a 0°.</td></tr>
+      <tr><td>Anterior/seguinte</td><td>Use as setas visuais junto ao cursor de rotação ou os atalhos de teclado.</td></tr>
+    </table>
+    <div class="callout"><strong>Nota.</strong> Zoom, deslocação e rotação alteram apenas a visualização; o ficheiro de imagem original não é modificado.</div>
+    <div class="footer"><span>Importação e visualização</span><span>Manual do Utilizador · 6</span></div>
+  </section>
+
+  <section class="page" id="metadados">
+    <h1>8. Consultar metadados</h1>
+    <p>Ao selecionar uma imagem, o sistema lê os metadados incorporados no ficheiro. Abra o painel da direita e selecione <strong>Details</strong>.</p>
+    <table>
+      <tr><th>Grupo</th><th>Campos apresentados</th><th>Interpretação</th></tr>
+      <tr><td>Device Details</td><td>Camera, Model, Software</td><td>Fabricante, modelo do equipamento e programa que gravou ou editou a imagem.</td></tr>
+      <tr><td>GPS Details</td><td>Latitude, Longitude, Altitude, Country, Code, City, Region</td><td>Coordenadas incorporadas e nomes geográficos obtidos através de serviço online.</td></tr>
+      <tr><td>Image Specifications</td><td>Exposure Time, Shutter Speed Value, ISO Speed Ratings, Focal Length, Focal Length in 35 mm</td><td>Parâmetros técnicos usados durante a captura.</td></tr>
+      <tr><td>Date Details</td><td>Created At, Digitalized At, Offset Time</td><td>Data/hora original, data de digitalização e informação de fuso horário, quando existentes.</td></tr>
+    </table>
+    <div class="callout"><strong>Campo N/A.</strong> Significa que o dado não existe no ficheiro, não foi reconhecido ou não pôde ser obtido. Uma imagem pode ser visualizada normalmente mesmo sem EXIF.</div>
+    <h2>Fiabilidade e interpretação</h2>
+    <ul>
+      <li>Metadados podem ser alterados ou removidos por editores, redes sociais, aplicações de mensagens e processos de exportação.</li>
+      <li>A presença de GPS não prova, por si só, que a imagem foi capturada naquele local.</li>
+      <li>O nome do país/cidade/região depende de geocodificação inversa e pode ser aproximado.</li>
+      <li>Para uso pericial, preserve o original, registe a origem e aplique procedimentos próprios de integridade.</li>
+    </ul>
+    <h2 id="mapa">9. Abrir a localização no mapa</h2>
+    <ol class="steps">
+      <li>Selecione uma imagem que apresente valores de latitude e longitude.</li>
+      <li>Clique no botão com o ícone de ligação/localização, junto aos controlos de navegação.</li>
+      <li>O navegador predefinido abre o Google Maps no ponto indicado.</li>
+    </ol>
+    <p>Se a imagem não tiver coordenadas, é apresentada a mensagem <strong>“Coordenates not set”</strong>. Se os nomes geográficos não aparecerem mas latitude e longitude existirem, confirme a ligação à Internet; as coordenadas locais ainda podem estar disponíveis.</p>
+    <div class="callout warning"><strong>Privacidade.</strong> A leitura dos ficheiros é local. Contudo, ao enriquecer a localização e abrir o mapa, as coordenadas são enviadas aos serviços externos Nominatim/OpenStreetMap e Google Maps, respetivamente.</div>
+    <div class="footer"><span>Metadados e mapa</span><span>Manual do Utilizador · 7</span></div>
+  </section>
+
+  <section class="page" id="relatorios">
+    <h1>10. Criar e abrir relatórios</h1>
+    <h2>10.1 Relatório de uma imagem</h2>
+    <ol class="steps">
+      <li>Clique na miniatura da imagem a analisar.</li>
+      <li>No painel da direita, abra o separador <strong>Set Report</strong>.</li>
+      <li>Escreva as observações em <strong>Image Notes</strong>. O limite atual é de 300 caracteres.</li>
+      <li>Clique em <strong>Export</strong>.</li>
+      <li>Aguarde a mensagem “Report Genarated”. O PDF é guardado automaticamente na pasta de relatórios.</li>
+    </ol>
+    <p>O nome do PDF é derivado do nome da imagem. Por exemplo, <span class="path">Inspecao_A0.jpg</span> gera <span class="path">Inspecao_A0.pdf</span>.</p>
+    <div class="callout warning"><strong>Substituição.</strong> Se já existir um PDF com o mesmo nome e ele não estiver bloqueado por outro programa, uma nova exportação poderá substituí-lo. Renomeie ou arquive o relatório anterior quando precisar de manter versões.</div>
+    <h2>10.2 Relatórios de várias imagens</h2>
+    <ol class="steps">
+      <li>Clique na primeira miniatura.</li>
+      <li>Mantenha <span class="kbd">Ctrl</span> premido e clique nas outras miniaturas.</li>
+      <li>Confirme a seleção através do contorno azul/ciano em cada miniatura.</li>
+      <li>Introduza as notas e clique em <strong>Export</strong>.</li>
+    </ol>
+    <p>Quando existem duas ou mais imagens selecionadas, o sistema cria um PDF separado para cada imagem. As mesmas notas são aplicadas a todos os relatórios desse lote.</p>
+    <div class="callout"><strong>Seleção simples.</strong> Um clique sem <span class="kbd">Ctrl</span> limpa a seleção anterior. Clicar novamente numa miniatura já selecionada remove-a da seleção.</div>
+    <h2>10.3 Abrir um relatório</h2>
+    <ol>
+      <li>No separador <strong>Set Report</strong>, clique em <strong>Open</strong>.</li>
+      <li>A janela abre inicialmente em <span class="path">Documentos\JM Vision Intelligence\Report</span>.</li>
+      <li>Selecione o ficheiro PDF e clique em <strong>Abrir</strong>. O leitor predefinido do Windows será usado.</li>
+    </ol>
+    <h2>10.4 Conteúdo do relatório</h2>
+    <p>O relatório pode incluir identificação do ficheiro, imagem de referência, data de emissão, dados do equipamento, GPS, parâmetros fotográficos, datas, notas do utilizador e blocos de verificação.</p>
+    <div class="footer"><span>Relatórios PDF</span><span>Manual do Utilizador · 8</span></div>
+  </section>
+
+  <section class="page" id="atalhos">
+    <h1>11. Atalhos de teclado</h1>
+    <table>
+      <tr><th>Atalho</th><th>Ação confirmada nesta versão</th></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">S</span></td><td>Mostrar ou ocultar a galeria inferior de miniaturas.</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">P</span></td><td>Mostrar ou ocultar o painel de propriedades/relatório.</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">←</span></td><td>Ir para a imagem anterior da galeria.</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + <span class="kbd">→</span></td><td>Ir para a imagem seguinte da galeria.</td></tr>
+      <tr><td><span class="kbd">Ctrl</span> + clique</td><td>Adicionar ou remover imagens numa seleção múltipla.</td></tr>
+    </table>
+    <div class="callout"><strong>Importante.</strong> As sugestões visuais de outras combinações existentes em alguns tooltips podem não corresponder à versão atual. A tabela acima reflete os atalhos efetivamente implementados.</div>
+    <h2 id="ficheiros">12. Pastas usadas pelo sistema</h2>
+    <table>
+      <tr><th>Pasta</th><th>Finalidade</th></tr>
+      <tr><td class="path">Documentos\JM Vision Intelligence\File Explore</td><td>Raiz das pastas e imagens de trabalho apresentadas na árvore.</td></tr>
+      <tr><td class="path">Documentos\JM Vision Intelligence\Report</td><td>Destino automático dos relatórios PDF.</td></tr>
+      <tr><td class="path">Documentos\JM Vision Intelligence\FileImageSystem</td><td>Recursos visuais internos usados pela aplicação e pelos relatórios.</td></tr>
+      <tr><td class="path">Documentos\JM Vision Intelligence\Data</td><td>Dados auxiliares reservados pelo sistema.</td></tr>
+    </table>
+    <div class="callout warning"><strong>Não remova recursos internos.</strong> A ausência de ficheiros como <span class="path">LOGO.png</span>, <span class="path">bg1.jpg</span> e ícones do relatório pode impedir a apresentação inicial ou a criação correta dos PDFs.</div>
+    <h2>Cópia de segurança</h2>
+    <p>Inclua pelo menos as pastas <strong>File Explore</strong> e <strong>Report</strong> na rotina de cópia de segurança. Feche a aplicação antes de copiar ou restaurar grandes volumes de dados.</p>
+    <div class="footer"><span>Atalhos e armazenamento</span><span>Manual do Utilizador · 9</span></div>
+  </section>
+
+  <section class="page" id="problemas">
+    <h1>13. Resolução de problemas</h1>
+    <table>
+      <tr><th>Sintoma</th><th>Causa provável</th><th>Solução</th></tr>
+      <tr><td>As miniaturas não aparecem.</td><td>Pasta sem imagens compatíveis, carregamento em curso ou formato não suportado pela galeria.</td><td>Aguarde, atualize a árvore, confirme a pasta e teste com JPG/PNG.</td></tr>
+      <tr><td>Aparece “Destination not set”.</td><td>A importação foi iniciada sem pasta de destino.</td><td>Selecione primeiro uma pasta na árvore e repita.</td></tr>
+      <tr><td>A pasta não é eliminada.</td><td>A pasta contém imagens/subpastas ou está em uso.</td><td>Feche ficheiros abertos, remova/mova o conteúdo e tente novamente.</td></tr>
+      <tr><td>Os campos mostram N/A.</td><td>A imagem não possui esses metadados.</td><td>Verifique o original diretamente da câmara; isto não é necessariamente uma falha.</td></tr>
+      <tr><td>País/cidade/região estão vazios.</td><td>Sem GPS, sem Internet ou serviço de geocodificação indisponível.</td><td>Confirme latitude/longitude e ligação à Internet; tente mais tarde.</td></tr>
+      <tr><td>O mapa não abre.</td><td>Sem coordenadas, navegador indisponível ou associação do Windows incorreta.</td><td>Confirme GPS e defina um navegador predefinido.</td></tr>
+      <tr><td>O PDF não é gerado.</td><td>Imagem não selecionada, ficheiro já aberto/bloqueado, recursos internos ausentes ou licença expirada.</td><td>Selecione a imagem, feche o PDF anterior, verifique FileImageSystem e observe a mensagem apresentada.</td></tr>
+      <tr><td>O botão Open não abre o PDF.</td><td>Sem aplicação predefinida para PDF.</td><td>Instale/defina um leitor de PDF no Windows e tente de novo.</td></tr>
+      <tr><td>A importação substituiu ficheiros.</td><td>Já existiam nomes de destino iguais.</td><td>Use uma pasta de destino nova/vazia e preserve os originais.</td></tr>
+      <tr><td>“Limite de uso excedido ou licença expirada”.</td><td>Limite da versão de avaliação atingido.</td><td>Contacte o suporte/licenciamento da JM Tecnologias.</td></tr>
+    </table>
+    <h2>Antes de pedir assistência</h2>
+    <p>Registe a versão do sistema, a mensagem completa, o passo que causou o erro, o formato da imagem e se o problema se repete com outro ficheiro. Não envie imagens confidenciais sem autorização.</p>
+    <div class="footer"><span>Resolução de problemas</span><span>Manual do Utilizador · 10</span></div>
+  </section>
+
+  <section class="page" id="boas-praticas">
+    <h1>14. Boas práticas</h1>
+    <ul>
+      <li><span class="check">✓</span> Preserve sempre os ficheiros originais fora da pasta de trabalho.</li>
+      <li><span class="check">✓</span> Crie uma pasta separada por projeto ou ocorrência antes de importar.</li>
+      <li><span class="check">✓</span> Use nomes de pastas claros, curtos e consistentes.</li>
+      <li><span class="check">✓</span> Verifique a imagem, os metadados e as notas antes de exportar.</li>
+      <li><span class="check">✓</span> Arquive relatórios antigos antes de voltar a gerar PDFs com o mesmo nome.</li>
+      <li><span class="check">✓</span> Faça cópias de segurança regulares de File Explore e Report.</li>
+      <li><span class="check">✓</span> Trate GPS e EXIF como informação auxiliar que pode ter sido alterada.</li>
+      <li><span class="check">✓</span> Em processos formais, documente origem, responsável, data e procedimentos de integridade.</li>
+    </ul>
+    <h2 id="glossario">15. Glossário</h2>
+    <table>
+      <tr><th>Termo</th><th>Significado</th></tr>
+      <tr><td>EXIF</td><td>Metadados técnicos incorporados por câmaras e outros dispositivos em ficheiros de imagem.</td></tr>
+      <tr><td>GPS</td><td>Latitude, longitude e, por vezes, altitude associadas à captura.</td></tr>
+      <tr><td>Geocodificação inversa</td><td>Conversão de coordenadas em nomes aproximados de país, cidade ou região.</td></tr>
+      <tr><td>ISO</td><td>Valor relacionado com a sensibilidade usada na captura.</td></tr>
+      <tr><td>Distância focal</td><td>Parâmetro da objetiva, normalmente expresso em milímetros.</td></tr>
+      <tr><td>Tempo de exposição</td><td>Tempo durante o qual o sensor ficou exposto à luz.</td></tr>
+      <tr><td>Miniatura</td><td>Representação reduzida da imagem na galeria inferior.</td></tr>
+      <tr><td>Pan</td><td>Deslocação da imagem dentro da área de pré-visualização.</td></tr>
+      <tr><td>N/A</td><td>Dado não disponível ou não aplicável.</td></tr>
+    </table>
+    <h2>Apoio</h2>
+    <p><strong>JM Tecnologias</strong><br>Software Engineering, Automation, GIS Systems e Image Analysis<br>E-mail indicado pelo sistema: <strong>comercial@jm-tecnologias.co.mz</strong></p>
+    <div class="callout"><strong>Referência da documentação:</strong> Manual do Utilizador, edição 1.0, baseado nas funcionalidades implementadas no JM Vision Intelligence System 1.0.0 em julho de 2026.</div>
+    <div class="footer"><span>Boas práticas, glossário e apoio</span><span>Manual do Utilizador · 11</span></div>
+  </section>
+</main>
+</body>
+</html>
