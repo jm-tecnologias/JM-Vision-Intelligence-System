@@ -5,6 +5,11 @@
 package jmvis.service;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Iterator;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.stream.ImageInputStream;
 import javafx.animation.RotateTransition;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +25,9 @@ public class ImageService {
 
     private ImageView imageView;
     private AnchorPane anchorImagePreview;
+    private final Panorama360Service panoramaService;
+    private String currentImagePath;
+    private boolean panoramaMode;
     private static double rotationAngle = 360;
 
     //    Zoom Functions
@@ -36,6 +44,7 @@ public class ImageService {
 
     public ImageService(AnchorPane anchorImagePreview) {
         this.anchorImagePreview = anchorImagePreview;
+        this.panoramaService = new Panorama360Service(anchorImagePreview);
 
         anchorImagePreview.widthProperty().addListener((obs, oldV, newV) -> updateImageSize());
         anchorImagePreview.heightProperty().addListener((obs, oldV, newV) -> updateImageSize());
@@ -61,6 +70,11 @@ public class ImageService {
     }
 
     public String setImagePreview(String path) {
+        currentImagePath = path;
+        if (isLikelyEquirectangular(path)) {
+            showPanorama(path);
+            return path;
+        }
         Image image = new Image(
                 new File(path).toURI().toString(),
                 1920,
@@ -69,12 +83,72 @@ public class ImageService {
                 true,
                 true
         );
+        showFlatImage(image);
+        return path;
+    }
+
+    private void showFlatImage(Image image) {
+        panoramaMode = false;
+        zoomFactor = 1.0;
         imageView = new ImageView(image);
         anchorImagePreview.getChildren().clear();
         anchorImagePreview.getChildren().add(imageView);
         updateImageSize();
         enablePan(); // activa o PAN
-        return path;
+    }
+
+    private void showPanorama(String path) {
+        panoramaMode = true;
+        imageView = null;
+        panoramaService.show(path);
+    }
+
+    private boolean isLikelyEquirectangular(String path) {
+        try (ImageInputStream input = ImageIO.createImageInputStream(new File(path))) {
+            if (input == null) {
+                return false;
+            }
+            Iterator<ImageReader> readers = ImageIO.getImageReaders(input);
+            if (!readers.hasNext()) {
+                return false;
+            }
+            ImageReader reader = readers.next();
+            try {
+                reader.setInput(input, true, true);
+                int height = reader.getHeight(0);
+                double ratio = (double) reader.getWidth(0) / height;
+                return height > 0 && Math.abs(ratio - 2.0) <= 0.08;
+            } finally {
+                reader.dispose();
+            }
+        } catch (IOException | RuntimeException ex) {
+            return false;
+        }
+    }
+
+    /** Switches the current image between the standard and spherical viewers. */
+    public boolean togglePanoramaMode() {
+        if (currentImagePath == null) {
+            return false;
+        }
+        if (panoramaMode) {
+            Image image = new Image(new File(currentImagePath).toURI().toString(),
+                    1920, 1080, true, true, true);
+            showFlatImage(image);
+        } else {
+            showPanorama(currentImagePath);
+        }
+        return panoramaMode;
+    }
+
+    public boolean isPanoramaMode() {
+        return panoramaMode;
+    }
+
+    public void resetPanoramaView() {
+        if (panoramaMode) {
+            panoramaService.resetView();
+        }
     }
 
     private void applyZoom() {

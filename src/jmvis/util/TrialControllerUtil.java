@@ -4,21 +4,12 @@
  */
 package jmvis.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import javafx.stage.Modality;
-import jmvis.Main;
 import java.io.*;
 import java.nio.file.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javafx.stage.Modality;
+import jmvis.Main;
 
 /**
  *
@@ -56,8 +47,8 @@ public class TrialControllerUtil {
         private static final long serialVersionUID = 1L;
 
         private int usedTimes = 0;
-        private int limitUsage = 20;
-        private String lastDayOfUsage = "16/07/2026";
+        private int limitUsage = 50;
+        private String lastDayOfUsage = "26/07/2026";
     }
 
     public boolean canUseProgram() {

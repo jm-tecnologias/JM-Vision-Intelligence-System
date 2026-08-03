@@ -20,19 +20,20 @@ import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.borders.SolidBorder;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Div;
-import com.itextpdf.layout.element.Paragraph;
-import java.io.FileNotFoundException;
-import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.HorizontalAlignment;
 import com.itextpdf.layout.property.TextAlignment;
 import com.itextpdf.layout.property.UnitValue;
 import com.itextpdf.layout.property.VerticalAlignment;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.stage.Modality;
 import jmvis.Main;
 import jmvis.model.ImageModel;
@@ -99,44 +100,94 @@ public class PDFReport {
         this.document.close();
         return true;
     }
-
-    private void createHeader() throws IOException {
-        LocalDate hoje = LocalDate.now();
-        float[] columnWidths = {50f, 50f};
-        Table table = new Table(UnitValue.createPercentArray(columnWidths));
-        table.setWidth(UnitValue.createPercentValue(100));
-
-        // Linha 1
-        Color myColor = WebColors.getRGBColor("#17b5c3");
-//        Image icon = new Image(ImageDataFactory.create("src/jmvis/assets/ARO LOGO FINAL.png"))
-//                .scaleToFit(50, 50); // tamanho do ícone
-////        .setMarginRight(5);  // espaço entre ícone e texto
+//
+//    private void createHeader() throws IOException {
+//        LocalDate hoje = LocalDate.now();
+//        float[] columnWidths = {50f, 50f};
+//        Table table = new Table(UnitValue.createPercentArray(columnWidths));
+//        table.setWidth(UnitValue.createPercentValue(100));
+//
+//        // Linha 1
+//        Color myColor = WebColors.getRGBColor("#17b5c3");
+//        Paragraph p = new Paragraph()
+//                //                .add(icon)
+//                .add(" JM Tecnologias")
+//                .setFont(bold)
+//                .setFontSize(16)
+//                .setFontColor(myColor);
+////                .setVerticalAlignment(VerticalAlignment.TOP);
 //
 //        Cell c1 = new Cell()
-//                .add(icon)
-//                .add(new Paragraph("AIR REACH OUT")
+//                .add(new Paragraph("JM Tecnologias")
 //                        .setFont(bold)
-//                        .setFontSize(16)
+//                        .setFontSize(14)
 //                        .setFontColor(myColor))
-//                //                .setBackgroundColor(myColor)
+//                .setTextAlignment(TextAlignment.CENTER)
 //                .setBorder(Border.NO_BORDER);
+//
+//        Cell c2 = new Cell()
+//                .add(new Paragraph("JM Vision Intelligence System")
+//                        .setFont(bold)
+//                        .setFontSize(14)
+//                        .setFontColor(ColorConstants.BLACK))
+//                .setTextAlignment(TextAlignment.RIGHT)
+//                .setBorder(Border.NO_BORDER);
+//
+//        // Linha 2
+//        Cell c3 = new Cell().add(new Paragraph(". JM-Tecnologias, SU, LDA")
+//                .setFont(normal)
+//                        .setFontSize(10)
+//                        .setFontColor(ColorConstants.BLACK))
+//                .setTextAlignment(TextAlignment.CENTER)
+//                .setBorder(Border.NO_BORDER);
+//
+//        Cell c4 = new Cell().add(new Paragraph("Issue Date:" + hoje)
+//                .setFont(normal)
+//                .setFontSize(10)
+//                .setFontColor(ColorConstants.BLACK))
+//                .setTextAlignment(TextAlignment.RIGHT)
+//                .setBorder(Border.NO_BORDER);
+//
+//        // Linha 3
+//        Cell c5 = new Cell(1, 2).add(new Paragraph("Maputo | www.jm-tecnologias.co.mz | comercial@jm-tecnologias.co.mz")
+//                .setFont(normal)
+//                .setFontSize(10)
+//                .setFontColor(ColorConstants.BLACK)
+//        ).setBorder(Border.NO_BORDER);
+//
+//        table.addCell(c1);
+//        table.addCell(c2);
+//        table.addCell(c3);
+//        table.addCell(c4);
+//        table.addCell(c5);
+//
+//        this.document.add(table);
+//    }
 
-//        Image icon = new Image(ImageDataFactory.create(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString()))
-//                .scaleToFit(50, 50);
-        Paragraph p = new Paragraph()
-                //                .add(icon)
-                .add(" JM Tecnologias")
-                .setFont(bold)
-                .setFontSize(16)
-                .setFontColor(myColor);
-//                .setVerticalAlignment(VerticalAlignment.TOP);
+    private void createHeader() throws IOException {
+
+        LocalDate hoje = LocalDate.now();
+
+        float[] columnWidths = {50f, 50f};
+
+        Table table = new Table(
+                UnitValue.createPercentArray(columnWidths)
+        );
+
+        table.setWidth(UnitValue.createPercentValue(90));
+        table.setHorizontalAlignment(HorizontalAlignment.CENTER);
+        table.setMarginTop(10);
+        table.setMarginBottom(20);
+
+        Color myColor = WebColors.getRGBColor("#17b5c3");
 
         Cell c1 = new Cell()
                 .add(new Paragraph("JM Tecnologias")
                         .setFont(bold)
                         .setFontSize(14)
                         .setFontColor(myColor))
-                .setTextAlignment(TextAlignment.CENTER)
+                .setTextAlignment(TextAlignment.LEFT)
+                .setVerticalAlignment(VerticalAlignment.MIDDLE)
                 .setBorder(Border.NO_BORDER);
 
         Cell c2 = new Cell()
@@ -145,29 +196,40 @@ public class PDFReport {
                         .setFontSize(14)
                         .setFontColor(ColorConstants.BLACK))
                 .setTextAlignment(TextAlignment.RIGHT)
+                .setVerticalAlignment(VerticalAlignment.MIDDLE)
                 .setBorder(Border.NO_BORDER);
 
-        // Linha 2
-        Cell c3 = new Cell().add(new Paragraph(". JM-Tecnologias, SU, LDA")
-                .setFont(normal)
+        Cell c3 = new Cell()
+                .add(new Paragraph("JM-Tecnologias, SU, LDA")
+                        .setFont(normal)
+                        .setFontSize(10)
+                        .setFontColor(ColorConstants.BLACK))
+                .setTextAlignment(TextAlignment.LEFT)
+                .setBorder(Border.NO_BORDER);
+
+        Cell c4 = new Cell()
+                .add(new Paragraph(
+                        "Issue Date: "
+                        + hoje.format(
+                                DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                        )
+                )
+                        .setFont(normal)
+                        .setFontSize(10)
+                        .setFontColor(ColorConstants.BLACK))
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setBorder(Border.NO_BORDER);
+
+        Cell c5 = new Cell(1, 2)
+                .add(new Paragraph(
+                        "Maputo | www.jm-tecnologias.co.mz | "
+                        + "comercial@jm-tecnologias.co.mz"
+                )
+                        .setFont(normal)
                         .setFontSize(10)
                         .setFontColor(ColorConstants.BLACK))
                 .setTextAlignment(TextAlignment.CENTER)
                 .setBorder(Border.NO_BORDER);
-
-        Cell c4 = new Cell().add(new Paragraph("Issue Date:" + hoje)
-                .setFont(normal)
-                .setFontSize(10)
-                .setFontColor(ColorConstants.BLACK))
-                .setTextAlignment(TextAlignment.RIGHT)
-                .setBorder(Border.NO_BORDER);
-
-        // Linha 3
-        Cell c5 = new Cell(1, 2).add(new Paragraph("Maputo | www.jm-tecnologias.co.mz | comercial@jm-tecnologias.co.mz")
-                .setFont(normal)
-                .setFontSize(10)
-                .setFontColor(ColorConstants.BLACK)
-        ).setBorder(Border.NO_BORDER);
 
         table.addCell(c1);
         table.addCell(c2);
@@ -175,7 +237,7 @@ public class PDFReport {
         table.addCell(c4);
         table.addCell(c5);
 
-        this.document.add(table);
+        document.add(table);
     }
 
     private void addImagePreview(ImageModel imgModel) throws MalformedURLException {

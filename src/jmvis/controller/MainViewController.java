@@ -111,6 +111,9 @@ public class MainViewController implements Initializable {
     private Button btnMakeDir;
 
     @FXML
+    private Button btnPanorama360;
+
+    @FXML
     private AnchorPane anchorImagePreview;
 
     @FXML
@@ -351,6 +354,27 @@ public class MainViewController implements Initializable {
     }
 
     @FXML
+    private void togglePanorama360(ActionEvent event) {
+        boolean enabled = imageService.togglePanoramaMode();
+        updatePanoramaButton(enabled);
+        lblStatus.setText(enabled
+                ? "Visualizacao 360 ativa: arraste para olhar, use a roda para zoom e duplo clique para ecra completo."
+                : "Visualizacao normal ativa.");
+    }
+
+    @FXML
+    private void resetPanorama360(ActionEvent event) {
+        imageService.resetPanoramaView();
+    }
+
+    private void updatePanoramaButton(boolean enabled) {
+        btnPanorama360.setText(enabled ? "360\u00B0 ATIVO" : "360\u00B0");
+        btnPanorama360.setStyle(enabled
+                ? "-fx-background-color: #0f75bb; -fx-text-fill: white; -fx-cursor: hand;"
+                : "-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;");
+    }
+
+    @FXML
     void spiner(MouseEvent event) {
         sliderRotate.valueProperty().addListener((ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
             if (sliderRotate.isValueChanging()) {
@@ -442,6 +466,7 @@ public class MainViewController implements Initializable {
         imgModel = new ImageModel();
         //        Inicializa logo 
         imageService.setImagePreview(Paths.get(System.getProperty("user.home"), "Documents", "JM Vision Intelligence/FileImageSystem/LOGO.png").toString());
+        updatePanoramaButton(imageService.isPanoramaMode());
 
         directoryTreeService.configure(treePalette, fm.getRoot().toFile());
         initClickListener();
@@ -535,6 +560,7 @@ public class MainViewController implements Initializable {
     private void previewImage(Path imagePath) {
         auxPath = imagePath;
         imageService.setImagePreview(imagePath.toString());
+        updatePanoramaButton(imageService.isPanoramaMode());
         sliderRotate.setValue(0);
         showProps(imagePath);
     }
